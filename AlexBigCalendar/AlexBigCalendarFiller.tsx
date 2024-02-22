@@ -2,7 +2,7 @@ import React, {FC, useMemo} from "react"
 import {Box, Grid, Stack, Typography} from "@mui/material"
 import {theme} from "../../frontend-time-manager/src/components/Theme/theme.ts"
 import {TAlexBigCalendarData, TServerSideOptions} from "./AlexBigCalendar.tsx"
-import {LinkRouterWrapper} from "../LinkRouterWrapper/LinkRouterWrapper.tsx"
+import {AlexLink} from "../AlexLink/AlexLink.tsx"
 import {AlexChip} from "../AlexChip/AlexChip.tsx"
 
 interface ICellProps {
@@ -39,10 +39,10 @@ const Cell: FC<ICellProps> = ({
 					<Grid item xs={12}>
 						<Stack direction={'row'} alignItems={'center'} spacing={theme.spacing(2)} useFlexGap>
 							{cellTasks.length && cellTasks[0].tags?.length ? (
-								<LinkRouterWrapper to={`../customization/tags/view?id=${cellTasks[0].tags[0].tagId}`}
-												   tooltipTitle={'Перейти к Тегу'}>
+								<AlexLink to={`../customization/tags/view?id=${cellTasks[0].tags[0].tagId}`}
+										  tooltipTitle={'Перейти к Тегу'}>
 									<AlexChip color={cellTasks[0].tags[0].tagColor} label={cellTasks[0].tags[0].tagName}/>
-								</LinkRouterWrapper>
+								</AlexLink>
 							) : undefined}
 							<Typography marginLeft={'auto'}>{day}</Typography>
 						</Stack>
@@ -51,14 +51,14 @@ const Cell: FC<ICellProps> = ({
 						{cellTasks.length ? (
 							<Stack direction={'row'} alignItems={'center'} spacing={theme.spacing(2)} height={0}
 								   position={'relative'} top={'10px'}>
-								<LinkRouterWrapper to={`../customization/events/view?id=${cellTasks[0].id}`}
-												   tooltipTitle={'Перейти к событию'}>
+								<AlexLink to={`../customization/events/view?id=${cellTasks[0].id}`}
+										  tooltipTitle={'Перейти к событию'}>
 									<Typography>
 										<span style={{color:'black'}}>{cellTasks.length > 1 ? 'События' : 'Событие'} : </span>
 										{cellTasks[0].name}
 										{cellTasks.length > 1 && ` + ${cellTasks.length - 1}`}
 									</Typography>
-								</LinkRouterWrapper>
+								</AlexLink>
 							</Stack>
 						) : undefined}
 					</Grid>

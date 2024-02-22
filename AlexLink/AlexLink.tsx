@@ -12,7 +12,7 @@ interface IProps {
     disable?: boolean
 }
 
-export const LinkRouterWrapper: FC<IProps> = ({
+export const AlexLink: FC<IProps> = ({
                                                   to,
                                                   relative,
                                                   children,
