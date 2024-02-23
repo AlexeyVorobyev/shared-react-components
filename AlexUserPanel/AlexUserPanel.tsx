@@ -1,12 +1,11 @@
-import React, {FC, useState} from 'react'
-import {Button, IconButton, Paper, Popover, Stack, Typography} from '@mui/material'
-import {LinkRouterWrapper} from '../../../../shared-react-components/LinkRouterWrapper/LinkRouterWrapper.tsx'
-import {theme} from '../../components/theme/theme.ts'
+import React, { FC, useState } from 'react'
+import { Button, IconButton, Paper, Popover, Stack, Typography, useTheme } from '@mui/material'
+import { LinkRouterWrapper } from '../../../../shared-react-components/LinkRouterWrapper/LinkRouterWrapper.tsx'
 import CloseIcon from '@mui/icons-material/Close'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-export const AlexUserPanel:FC = () => {
-
+export const AlexUserPanel: FC = () => {
+    const theme = useTheme()
     const [openButtonPopover, setOpenButtonPopover] = useState<boolean>(false)
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,35 +17,35 @@ export const AlexUserPanel:FC = () => {
         <Stack direction={'row'} alignItems={'center'} spacing={1}>
             <LinkRouterWrapper to={'/cabinet'}>
                 <IconButton>
-                    <AccountCircleIcon style={{color:theme.palette.primary.contrastText}}/>
+                    <AccountCircleIcon style={{ color: theme.palette.primary.contrastText }}/>
                 </IconButton>
             </LinkRouterWrapper>
             <LinkRouterWrapper to={'/cabinet'}>
-                <Typography variant={'subtitle1'} sx={{cursor: 'pointer'}} color={theme.palette.primary.contrastText}>
+                <Typography variant={'subtitle1'} sx={{ cursor: 'pointer' }} color={theme.palette.primary.contrastText}>
                     Личный кабинет
                 </Typography>
             </LinkRouterWrapper>
             <IconButton onClick={handleClick}>
-                <CloseIcon style={{color:theme.palette.primary.contrastText}}/>
+                <CloseIcon style={{ color: theme.palette.primary.contrastText }}/>
             </IconButton>
             <Popover
                 open={openButtonPopover}
                 anchorEl={anchorEl}
                 sx={{
-                    zIndex: 100000
+                    zIndex: 100000,
                 }}
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',
                 }}
             >
-                <Paper elevation={3} sx={{padding: '10px'}}>
+                <Paper elevation={3} sx={{ padding: '10px' }}>
                     <Stack direction={'column'} spacing={theme.spacing(1)} alignItems={'center'}>
                         <Typography variant={'subtitle1'}>Выйти из аккаунта?</Typography>
                         <Stack direction={'row'} spacing={theme.spacing(1)}>
                             <Button size={'large'}
                                     sx={{
-                                        width:'80px',
+                                        width: '80px',
                                     }}
                                     color={'error'}
                                     onClick={() => {
@@ -58,7 +57,7 @@ export const AlexUserPanel:FC = () => {
                             </Button>
                             <Button size={'large'}
                                     sx={{
-                                        width:'80px',
+                                        width: '80px',
                                     }}
                                     color={'neutral'}
                                     onClick={() => setOpenButtonPopover(false)}

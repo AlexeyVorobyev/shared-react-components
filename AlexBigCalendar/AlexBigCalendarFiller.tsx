@@ -1,9 +1,8 @@
-import React, {FC, useMemo} from "react"
-import {Box, Grid, Stack, Typography} from "@mui/material"
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme.ts"
-import {TAlexBigCalendarData, TServerSideOptions} from "./AlexBigCalendar.tsx"
-import {AlexLink} from "../AlexLink/AlexLink.tsx"
-import {AlexChip} from "../AlexChip/AlexChip.tsx"
+import React, { FC, useMemo } from 'react'
+import { Grid, Stack, Typography, useTheme } from '@mui/material'
+import { TAlexBigCalendarData, TServerSideOptions } from './AlexBigCalendar.tsx'
+import { AlexLink } from '../AlexLink/AlexLink.tsx'
+import { AlexChip } from '../AlexChip/AlexChip.tsx'
 
 interface ICellProps {
 	day: number,
@@ -20,7 +19,7 @@ const Cell: FC<ICellProps> = ({
 								  data = [],
 								  serverSideOptions
 							  }) => {
-
+	const theme = useTheme()
 	const cellDate = useMemo(() => new Date(date.getFullYear(), date.getMonth(), day), [date, day])
 
 	const cellTasks: TAlexBigCalendarData[] = useMemo(() => {

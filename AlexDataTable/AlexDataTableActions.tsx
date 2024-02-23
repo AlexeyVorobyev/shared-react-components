@@ -1,8 +1,7 @@
 import React, {FC, useCallback, useState} from "react";
 import {IActionsConfig, ICustomDataTableRow} from "./AlexDataTable";
-import {Button, IconButton, Popover, Stack, Typography} from "@mui/material";
+import { Button, IconButton, Popover, Stack, Typography, useTheme } from '@mui/material'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme";
 import {useNavigate} from "react-router-dom";
 import {AlexDialog} from "../AlexDialog/AlexDialog";
 
@@ -15,7 +14,7 @@ export const AlexDataTableActions: FC<IProps> = ({
                                                      actionsConfig,
                                                      row,
                                                  }) => {
-
+    const theme = useTheme()
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
     const [openDialog, setOpenDialog] = useState<boolean>(false)
     const navigate = useNavigate()

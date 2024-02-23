@@ -1,11 +1,11 @@
-import React, {FC, useMemo} from "react";
-import {Chip, Divider, Stack, Typography} from "@mui/material";
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme";
-import {ICustomDataTableColumn} from "./AlexDataTable";
-import {AlexDataTableSimpleFilter} from "./AlexDataTableSimpleFilter";
-import {AlexDataTableColumnsSelect} from "./AlexDataTableColumnsSelect";
-import {AlexFilters} from "../AlexFilters/AlexFilters";
-import {AlexDataTableDownloadCSV} from "./AlexDataTableDownloadCSV";
+import React, { FC, useMemo } from 'react'
+import { Chip, Divider, Stack, Typography, useTheme } from '@mui/material'
+import { ICustomDataTableColumn } from './AlexDataTable'
+import { AlexDataTableSimpleFilter } from './AlexDataTableSimpleFilter'
+import { AlexDataTableColumnsSelect } from './AlexDataTableColumnsSelect'
+import { AlexFilters } from '../AlexFilters/AlexFilters'
+import { AlexDataTableDownloadCSV } from './AlexDataTableDownloadCSV'
+import { IAlexFilter } from '../AlexFilters/AlexFilter.tsx'
 
 interface IProps {
     simpleFilter: boolean
@@ -18,6 +18,7 @@ interface IProps {
     downloadCSV: boolean
     data?: Object[]
     columns: ICustomDataTableColumn[]
+    filtersMap: Map<string, IAlexFilter>
 }
 
 export const AlexDataTableHeader: FC<IProps> = ({
@@ -30,8 +31,10 @@ export const AlexDataTableHeader: FC<IProps> = ({
                                                     serverSideOptions,
                                                     setServerSideOptions,
                                                     downloadCSV,
-                                                    data
+                                                    data,
+                                                    filtersMap,
                                                 }) => {
+    const theme = useTheme()
     const amountOfChosenFilters = useMemo(() => {
         if (!filterListIds) return 0
         return Array.from(serverSideOptions)
@@ -41,7 +44,7 @@ export const AlexDataTableHeader: FC<IProps> = ({
     return (<>
         <Stack direction={'row'} justifyContent={'end'} spacing={theme.spacing(2)}
                padding={theme.spacing(2)} useFlexGap alignItems={'center'}>
-            <Stack direction={'row'} spacing={theme.spacing(2)} alignItems={'center'} sx={{marginRight: 'auto'}}>
+            <Stack direction={'row'} spacing={theme.spacing(2)} alignItems={'center'} sx={{ marginRight: 'auto' }}>
                 {simpleFilter &&
                     <AlexDataTableSimpleFilter setServerSideOptions={setServerSideOptions}
                                                serverSideOptions={serverSideOptions}/>}
@@ -52,7 +55,7 @@ export const AlexDataTableHeader: FC<IProps> = ({
             </Stack>
             {filterListIds &&
                 <AlexFilters filterListIds={filterListIds} setServerSideOptions={setServerSideOptions}
-                             serverSideOptions={serverSideOptions}/>}
+                             serverSideOptions={serverSideOptions} filtersMap={filtersMap}/>}
             {downloadCSV && <AlexDataTableDownloadCSV columnsState={columnsState} data={data} columns={columns}/>}
             {columnsSelect &&
                 <AlexDataTableColumnsSelect columnsState={columnsState} setColumnsState={setColumnsState}/>}

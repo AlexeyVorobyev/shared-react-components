@@ -1,6 +1,5 @@
 import {CSSProperties, FC, useState} from "react";
-import {Paper, Skeleton, Tooltip, Typography} from "@mui/material";
-import {theme} from "../../../frontend-time-manager/src/components/Theme/theme";
+import { Paper, Skeleton, Tooltip, Typography, useTheme } from '@mui/material'
 import {AlexDialog} from "../../AlexDialog/AlexDialog";
 
 interface IProps {
@@ -16,7 +15,7 @@ export const AlexImageView: FC<IProps> = ({
                                               freeAfterLoaded = false,
                                               modal = false
                                           }) => {
-
+    const theme = useTheme()
     const [loaded, setLoaded] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [open, setOpen] = useState<boolean>(false)

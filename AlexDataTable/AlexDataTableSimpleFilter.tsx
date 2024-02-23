@@ -12,7 +12,6 @@ export const AlexDataTableSimpleFilter: FC<IProps> = ({
                                                           serverSideOptions,
                                                           setServerSideOptions
                                                       }) => {
-
     const [simpleFilterState, setSimpleFilterState] = useState<string | null>(null)
     const [middleWareFilterState, setMiddleWareFilterState] = useState<string | null>(null)
     const debouncedSetMiddleWareFilterState = useCallback(debounce(setMiddleWareFilterState, 800), [])

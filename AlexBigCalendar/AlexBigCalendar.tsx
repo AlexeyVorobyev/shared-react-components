@@ -1,11 +1,16 @@
 import React, {FC} from "react"
-import {Box, CircularProgress, Grid, IconButton, Stack, Typography} from "@mui/material"
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme.ts"
+import { Box, CircularProgress, Grid, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import {AlexBigCalendarHeaders} from "./AlexBigCalendarHeaders.tsx"
 import {AlexBigCalendarFiller} from "./AlexBigCalendarFiller.tsx"
 import {MAP_NUMBER_TO_MONTH_RUS} from "./AlexBigCalendarGlobaConstants.ts"
 import {AlexIcon} from "../AlexIcon/AlexIcon.tsx"
-import {TTagEntity} from "../../frontend-time-manager/src/redux/api/types/tags.ts"
+
+export type TTagEntity = {
+	tagId: number,
+	tagName: string,
+	tagDesc: string,
+	tagColor: string
+}
 
 export type TAlexBigCalendarData = {
 	id:string,
@@ -27,6 +32,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 												serverSideOptions,
 												setServerSideOptions
 											}) => {
+	const theme = useTheme()
 
 	return (<>
 		{!data && (<Box sx={{
@@ -67,7 +73,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 									return new Map(prev)
 								})
 							}}>
-								<AlexIcon iconName={'keyBoardArrowLeft'} size={'large'}/>
+								<AlexIcon iconName={'keyBoardArrowLeft'} fontSize={'large'}/>
 							</IconButton>
 						</Stack>
 						<Stack justifyContent={'center'} alignItems={'center'} bgcolor={'white'} borderRadius={'100px'}>
@@ -78,7 +84,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 									return new Map(prev)
 								})
 							}}>
-								<AlexIcon iconName={'keyBoardArrowRight'} size={'large'}/>
+								<AlexIcon iconName={'keyBoardArrowRight'} fontSize={'large'}/>
 							</IconButton>
 						</Stack>
 					</Stack>

@@ -1,7 +1,6 @@
 import React, {FC, ReactNode, useEffect} from "react";
 import {FormProvider, useForm} from "react-hook-form";
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme";
-import {Box, Button, Divider, Stack, Typography} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material'
 
 interface IProps {
     children: ReactNode
@@ -21,7 +20,7 @@ export const AlexFiltersFormContext: FC<IProps> = ({
                                                        setServerSideOptions,
                                                        filterListIds
                                                    }) => {
-
+    const theme = useTheme()
     const methods = useForm()
     const {handleSubmit, reset, formState: {errors}} = methods
 

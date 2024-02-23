@@ -1,7 +1,6 @@
 import { FC, ReactNode, useCallback, useState } from 'react'
-import { List, Stack, Switch, Tooltip } from '@mui/material'
+import { List, Stack, Switch, Tooltip, useTheme } from '@mui/material'
 import { AlexSideNavigationItem } from './AlexSideNavigationItem.tsx'
-import { theme } from '../../components/theme/theme.ts'
 
 export type TSideNavigationConfig = {
     path: string | null,
@@ -15,23 +14,24 @@ interface IAlexSideNavigationProps {
 }
 
 export const AlexSideNavigation: FC<IAlexSideNavigationProps> = ({ config }) => {
+    const theme = useTheme()
     const [isContracted, setIsContracted] = useState<boolean>(true)
 
-    const constructSideNavigation = useCallback((sideNavigationConfig: TSideNavigationConfig[]) => {
-        return sideNavigationConfig.map((item) => {
-            if (item.routes) {
-                return (<AlexSideNavigationItem key={item.name} name={item.name} path={item.path}
-                                                icon={item.icon} isContracted={isContracted}
-                                                setIsContracted={setIsContracted}>
+    const constructSideNavigation = useCallback((sideNavigationConfig: TSideNavigationConfig[]) => (
+        sideNavigationConfig.map((item) => (
+            item.routes ? (
+                <AlexSideNavigationItem key={item.name} name={item.name} path={item.path}
+                                        icon={item.icon} isContracted={isContracted}
+                                        setIsContracted={setIsContracted}>
                     {constructSideNavigation(item.routes)}
-                </AlexSideNavigationItem>)
-            } else {
-                return <AlexSideNavigationItem key={item.name} name={item.name} path={item.path}
-                                               icon={item.icon} isContracted={isContracted}
-                                               setIsContracted={setIsContracted}/>
-            }
-        })
-    }, [config, isContracted])
+                </AlexSideNavigationItem>
+            ) : (
+                <AlexSideNavigationItem key={item.name} name={item.name} path={item.path}
+                                        icon={item.icon} isContracted={isContracted}
+                                        setIsContracted={setIsContracted}/>
+            )
+        ))
+    ), [config, isContracted])
 
     return (
         <Stack

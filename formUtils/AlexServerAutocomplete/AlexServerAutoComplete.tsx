@@ -99,7 +99,6 @@ export const AlexServerAutoComplete: React.FC<IProps> = ({
 								? (value || [])
 								: (value || null)
 							}
-							// @ts-ignore
 							onChange={(event, newValue) => {
 								onChange(newValue)
 							}}
@@ -107,7 +106,6 @@ export const AlexServerAutoComplete: React.FC<IProps> = ({
 							getOptionLabel={(value: IOption) => {
 								return value.name
 							}}
-							// @ts-ignore
 							onInputChange={(event, value) => {
 								setInputValue(value)
 							}}

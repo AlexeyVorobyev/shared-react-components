@@ -53,7 +53,6 @@ export const AlexDataTableDownloadCSV: FC<IProps> = ({
                                                          columnsState,
                                                          columns
                                                      }) => {
-
     const rows = useMemo(() => formatFlatData(columns,EFormatFlatDataMode.text, data), [data, columnsState])
 
     const handleClick = useCallback(() => {

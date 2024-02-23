@@ -1,5 +1,5 @@
-import React, {FC, ReactElement, ReactNode, useCallback, useState} from "react";
-import {AlexDialog} from "./AlexDialog";
+import React, { FC, ReactElement, ReactNode, useCallback, useState } from 'react'
+import { AlexDialog } from './AlexDialog'
 
 interface IFunctionsAssign {
     [key: string]: {
@@ -17,8 +17,7 @@ interface IProps {
     }
 }
 
-export const AlexDialogButton: FC<IProps> = ({button, dialog}) => {
-
+export const AlexDialogButton: FC<IProps> = ({ button, dialog }) => {
     const setFunctions = useCallback((reactElement: ReactElement): ReactElement => {
         const functionsAssign = dialog!.functionsAssign!
         const dfs = (reactElement: ReactElement): ReactElement => {
@@ -41,11 +40,11 @@ export const AlexDialogButton: FC<IProps> = ({button, dialog}) => {
             }
             if (reactElement.props.children.length && typeof reactElement.props.children !== 'string') {
                 reactElement = React.cloneElement(reactElement, {
-                    children: reactElement.props.children.map((child: ReactElement) => dfs(child))
+                    children: reactElement.props.children.map((child: ReactElement) => dfs(child)),
                 })
             } else if (typeof reactElement.props.children === 'object') {
                 reactElement = React.cloneElement(reactElement, {
-                    children: React.cloneElement(dfs(reactElement.props.children))
+                    children: React.cloneElement(dfs(reactElement.props.children)),
                 })
             }
 
@@ -67,8 +66,10 @@ export const AlexDialogButton: FC<IProps> = ({button, dialog}) => {
                 setOpen(true)
             },
         })}
-        {dialog && <AlexDialog title={dialog.title} open={open} setOpen={setOpen}>
-            {dialogElement}
-        </AlexDialog>}
+        {dialog && (
+            <AlexDialog title={dialog.title} open={open} setOpen={setOpen}>
+                {dialogElement}
+            </AlexDialog>
+        )}
     </>)
 }

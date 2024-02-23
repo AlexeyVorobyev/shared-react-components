@@ -1,15 +1,23 @@
-import React, {FC} from "react"
-import {EIconToNameMap, IconToNameMap} from "./AlexIconIconToNameMap.ts"
+import React, { FC } from 'react'
+import { EIconToNameMap, IconToNameMap } from './AlexIconIconToNameMap.ts'
+import { SvgIconProps } from '@mui/material'
 
-interface IProps {
-	iconName: EIconToNameMap | `${EIconToNameMap}`
-	size?: "small" | "inherit" | "large" | "medium"
+interface IAlexIconProps extends SvgIconProps {
+    iconName: EIconToNameMap | `${EIconToNameMap}`
 }
 
-export const AlexIcon: FC<IProps> = ({
-										 iconName,
-										 size = 'medium'
-									 }) => {
-	const Icon = IconToNameMap[iconName]
-	return <Icon fontSize={size}/>
+/**
+ *  Component that loads predefined mui icons by enum
+ *
+ *  @param iconName - Predefined icon name
+ *  @param props - Default props of MUI SVG icon
+ * */
+export const AlexIcon: FC<IAlexIconProps> = ({
+                                                 iconName,
+                                                 ...props
+                                             }) => {
+    const Icon = IconToNameMap[iconName]
+    return (
+        <Icon {...props}/>
+    )
 }

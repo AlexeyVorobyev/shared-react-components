@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import * as muiColors from '@mui/material/colors'
 import Radio from '@mui/material/Radio'
-import Typography from '@mui/material/Typography'
-import {Box, Divider, Paper, Stack, Tooltip} from '@mui/material'
+import { Box, Divider, Paper, Stack, Tooltip, useTheme } from '@mui/material'
 import {AlexInput} from "../AlexInput/AlexInput.tsx"
 import {makeStyles} from "@mui/styles"
 import {EColorPaletteType} from "./AlexColorPickerControlled.tsx"
-import {theme} from "../../../frontend-time-manager/src/components/Theme/theme.ts"
 
 interface Color {
 	[shade: string]: string
@@ -153,6 +151,7 @@ export const AlexColorPicker: React.FC<ColorPickerProps> = ({
 																disabled,
 																palette = EColorPaletteType.full
 															}) => {
+	const theme = useTheme()
 	const [currentPalette, setCurrentPalette] = useState<`${EColorPaletteType}`>(palette)
 	const [customColor, setCustomColor] = useState<string>(defaultColor)
 	const [customColors, setCustomColors] = useState<string[]>([])

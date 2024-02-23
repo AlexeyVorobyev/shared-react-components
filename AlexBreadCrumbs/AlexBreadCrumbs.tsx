@@ -1,8 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Breadcrumbs, Typography } from '@mui/material'
+import { Breadcrumbs, Typography, useTheme } from '@mui/material'
 import { constructPathLink } from '../../../../shared-react-components/functions/constructPathLink.ts'
-import { theme } from '../../components/theme/theme.ts'
 import { checkLocation } from '../../../../shared-react-components/functions/checkLocation.ts'
 import { LinkRouterWrapper } from '../../../../shared-react-components/LinkRouterWrapper/LinkRouterWrapper.tsx'
 import { APP_NAME } from '../../globalConstants.ts'
@@ -23,6 +22,7 @@ export const AlexBreadCrumbs: FC<IAlexBreadCrumbs> = ({
                                                           allowedLinks,
                                                           forbiddenLinks = []
                                                       }) => {
+    const theme = useTheme()
     const location = useLocation()
     const pathArr = useMemo(() => location.pathname.split('/').filter((item) => item !== ''), [location])
 

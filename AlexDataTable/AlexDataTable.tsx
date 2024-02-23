@@ -1,24 +1,23 @@
-import React, {FC, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import {Box, CircularProgress, Divider, Stack, Typography} from "@mui/material";
-import {AlexDataTableFooter} from "./AlexDataTableFooter";
-import {useNavigate} from "react-router-dom";
-import {AlexDataTableActions} from "./AlexDataTableActions";
-import {MutationTrigger} from "@reduxjs/toolkit/dist/query/react/buildHooks";
-import {AlexDataTableHeader} from "./AlexDataTableHeader";
-import {AlexDataTableSortWrapper} from "./AlexDataTableSortWrapper";
-
-//TODO CUSTOM FILTERS COMPONENT ?
+import React, { FC, ReactNode, useEffect, useMemo, useState } from 'react'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import { Box, CircularProgress, Divider, Stack, Typography } from '@mui/material'
+import { AlexDataTableFooter } from './AlexDataTableFooter'
+import { useNavigate } from 'react-router-dom'
+import { AlexDataTableActions } from './AlexDataTableActions'
+import { MutationTrigger } from '@reduxjs/toolkit/dist/query/react/buildHooks'
+import { AlexDataTableHeader } from './AlexDataTableHeader'
+import { AlexDataTableSortWrapper } from './AlexDataTableSortWrapper'
+import { IAlexFilter } from '../AlexFilters/AlexFilter.tsx'
 
 export interface ICustomDataTableColumn {
     id: string,
     label: string,
-    align?: "center" | "left" | "right" | "inherit" | "justify",
+    align?: 'center' | 'left' | 'right' | 'inherit' | 'justify',
     minWidth?: number,
     format?: (value: any) => ReactNode,
     formatText?: (value: any) => string,
@@ -59,6 +58,7 @@ interface IProps {
     serverSideOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
     downloadCSV?: boolean
+    filtersMap: Map<string, IAlexFilter>
 }
 
 const DEBUG = true
@@ -114,7 +114,8 @@ export const AlexDataTable: FC<IProps> = ({
                                               filterListIds,
                                               setServerSideOptions,
                                               serverSideOptions,
-                                              downloadCSV = false
+                                              downloadCSV = false,
+                                              filtersMap,
                                           }) => {
 
     DEBUG && console.log(DEBUG_PREFIX, 'DATA', data)
@@ -122,30 +123,30 @@ export const AlexDataTable: FC<IProps> = ({
     const [columnsState, setColumnsState] = useState<ICustomDataTableColumn[]>(
         sessionStorage.getItem(`columnsDataBase${location.pathname}`)
             ? JSON.parse(sessionStorage.getItem(`columnsDataBase${location.pathname}`)!) as ICustomDataTableColumn[]
-            : columns
+            : columns,
     )
 
     useEffect(() => {
         sessionStorage.setItem(`columnsDataBase${location.pathname}`, JSON.stringify(columnsState))
     }, [columnsState])
 
-    const rows = useMemo(() => formatFlatData(columns,EFormatFlatDataMode.jsx, data), [columns, data])
+    const rows = useMemo(() => formatFlatData(columns, EFormatFlatDataMode.jsx, data), [columns, data])
     const navigate = useNavigate()
 
     return (
-        <Stack sx={{height: '100%', width: '100%'}} direction={'column'} useFlexGap>
+        <Stack sx={{ height: '100%', width: '100%' }} direction={'column'} useFlexGap>
             {(simpleFilter || columnsSelect) &&
                 <AlexDataTableHeader simpleFilter={simpleFilter} columnsSelect={columnsSelect}
                                      columnsState={columnsState} setColumnsState={setColumnsState}
                                      filterListIds={filterListIds} setServerSideOptions={setServerSideOptions}
                                      serverSideOptions={serverSideOptions} downloadCSV={downloadCSV} data={data}
-                                     columns={columns}/>}
+                                     columns={columns} filtersMap={filtersMap}/>}
             {!rows && (<Box sx={{
                 width: '100%',
                 height: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
             }}>
                 <CircularProgress/>
             </Box>)}
@@ -154,7 +155,7 @@ export const AlexDataTable: FC<IProps> = ({
                 height: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
             }}>
                 <Typography variant={'h5'}>Данных по заданным параметрам нет</Typography>
             </Box>)}
@@ -170,7 +171,7 @@ export const AlexDataTable: FC<IProps> = ({
                                         if (column.display === false) return
                                         return (
                                             <TableCell key={column.id} align={column.align}
-                                                       style={{minWidth: column.minWidth}}>
+                                                       style={{ minWidth: column.minWidth }}>
                                                 {column.sort === false ?
                                                     column.label
                                                     : (<AlexDataTableSortWrapper column={column}
@@ -185,7 +186,7 @@ export const AlexDataTable: FC<IProps> = ({
                                         <TableCell key={'actions'} align={'left'}>
                                             Действия
                                         </TableCell>
-                                        : undefined
+                                        : undefined,
                                 ]}
                             </TableRow>
                         </TableHead>
@@ -193,7 +194,7 @@ export const AlexDataTable: FC<IProps> = ({
                             {rows.map((row, index) => {
                                 return (
                                     <TableRow hover={Boolean(actionsConfig?.view)}
-                                              sx={{cursor: actionsConfig?.view ? 'pointer' : undefined}} role="checkbox"
+                                              sx={{ cursor: actionsConfig?.view ? 'pointer' : undefined }} role="checkbox"
                                               tabIndex={-1} key={index}
                                               onDoubleClick={actionsConfig?.view ? () => {
                                                   navigate(`${actionsConfig?.view?.path!}?id=${row.get(actionsConfig!.view!.columnName)}${actionsConfig!.view!.params ? '&' + actionsConfig!.view!.params.toString() : ''}`)
@@ -212,10 +213,10 @@ export const AlexDataTable: FC<IProps> = ({
                                                 (<TableCell key={'actions'} align={'left'}>
                                                     <AlexDataTableActions actionsConfig={actionsConfig} row={row}/>
                                                 </TableCell>)
-                                                : undefined
+                                                : undefined,
                                         ]}
                                     </TableRow>
-                                );
+                                )
                             })}
                         </TableBody>
                     </Table>

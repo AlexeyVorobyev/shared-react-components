@@ -1,7 +1,6 @@
-import {IconButton, Popover, Stack, Tooltip, Typography} from "@mui/material";
+import { IconButton, Popover, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import React, {FC, useState} from "react";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme";
 import Checkbox from "@mui/material/Checkbox";
 import {ICustomDataTableColumn} from "./AlexDataTable";
 
@@ -14,7 +13,7 @@ export const AlexDataTableColumnsSelect:FC<IProps> = ({
                                                           columnsState,
                                                           setColumnsState
                                                       }) => {
-
+    const theme = useTheme()
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
     return (<>

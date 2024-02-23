@@ -14,7 +14,6 @@ export const AlexDialog: FC<IProps> = ({
 										   open,
 										   setOpen
 									   }) => {
-
 	const handleKeyUp = useCallback((event: KeyboardEvent) => {
 		event.stopPropagation()
 		if (event.key === 'Escape' || event.key === 'Backspace') {

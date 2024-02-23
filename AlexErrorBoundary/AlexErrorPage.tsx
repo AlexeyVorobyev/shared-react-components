@@ -1,10 +1,9 @@
 import {FC} from "react";
-import {Button, Stack, Typography} from "@mui/material";
-import {theme} from "../../components/theme/theme.ts";
+import { Button, Stack, Typography, useTheme } from '@mui/material'
 import {LinkRouterWrapper} from "../../../../shared-react-components/LinkRouterWrapper/LinkRouterWrapper.tsx";
 
 export const AlexErrorPage: FC = () => {
-
+    const theme = useTheme()
     return (
         <Stack direction={'column'} justifyContent={'center'} alignItems={'center'} spacing={theme.spacing(2)}
                height={'100%'}>

@@ -1,12 +1,12 @@
 import {FC, ReactNode} from "react"
-import {toast, ToastContainer} from "react-toastify"
+import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 interface IProps {
     children: ReactNode
 }
 
-export const ToastProvider: FC<IProps> = ({children}) => {
+export const AlexToastProvider: FC<IProps> = ({children}) => {
 
     return (<>
         <ToastContainer/>

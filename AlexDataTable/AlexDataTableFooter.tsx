@@ -1,6 +1,5 @@
 import React, {FC, useLayoutEffect, useRef, useState} from "react";
-import {FormControl, MenuItem, Pagination, Stack, TextField, Typography} from "@mui/material";
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme";
+import { FormControl, MenuItem, Pagination, Stack, TextField, Typography, useTheme } from '@mui/material'
 import {booleanNumber} from "../functions/booleanNumber";
 
 interface IProps {
@@ -18,6 +17,7 @@ export const AlexDataTableFooter: FC<IProps> = ({
                                                     serverSideOptions,
                                                     setServerSideOptions
                                                 }) => {
+    const theme = useTheme()
     const [page, setPage] = useState<string | null>(serverSideOptions.get('page') || '0');
     const [perPage, setPerPage] = useState<string | null>(serverSideOptions.get('perPage') || '8')
     const savedAvailablePages = useRef<string | null>(booleanNumber(availablePages) ? availablePages!.toString() : null)

@@ -1,26 +1,28 @@
-import {FC} from "react"
-import {Chip} from "@mui/material"
-import {makeStyles} from "@mui/styles"
+import { FC } from 'react'
+import { Chip, ChipProps } from '@mui/material'
 
 const invertHex = (hex: string) => {
-	return (Number(`0x1${hex}`) ^ 0xFFFFFF).toString(16).toUpperCase()
+    return (Number(`0x1${hex}`) ^ 0xFFFFFF).toString(16).toUpperCase()
 }
 
-interface IProps {
-	label?: string
-	color?: string
+interface IAlexChipProps extends Omit<ChipProps, 'color'> {
+    color?: string
 }
 
-export const AlexChip: FC<IProps> = ({
-										 label = "",
-										 color = "#333333"
-									 }) => {
-
-
-	return (
-		<Chip label={label} sx={{
-			backgroundColor: color,
-			color: `#${invertHex(color)}`
-		}}/>
-	)
-}
+/**
+ * Component that changes the underlying color behavior of the wrapped component
+ *
+ * @param color - Custom color for background and color of text that automatically matches the color
+ * @param props - Default props of MUI Chip
+ * */
+export const AlexChip: FC<IAlexChipProps> = ({
+                                                 color = '#333333',
+                                                 ...props
+                                             }) => (
+    <Chip
+        {...props}
+        sx={{
+            backgroundColor: color,
+            color: `#${invertHex(color)}`,
+        }}/>
+)

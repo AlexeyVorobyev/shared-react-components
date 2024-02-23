@@ -1,7 +1,10 @@
-import {FC} from "react";
-import {IAlexFilter} from "./alexFiltersMap";
-import {Grid, Stack, Typography} from "@mui/material";
-import {theme} from "../../frontend-time-manager/src/components/Theme/theme";
+import { FC, ReactElement } from 'react'
+import { Stack, Typography, useTheme } from '@mui/material'
+
+export interface IAlexFilter {
+    label: string,
+    component: ReactElement
+}
 
 interface IProps {
     config: IAlexFilter
@@ -10,6 +13,7 @@ interface IProps {
 export const AlexFilter: FC<IProps> = ({
                                            config
                                        }) => {
+    const theme = useTheme()
     const {label, component} = config
 
     return (
