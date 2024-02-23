@@ -4,7 +4,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { useLocation } from 'react-router-dom'
 import { theme } from '../../components/theme/theme.ts'
 import { checkLocation } from '../../../../shared-react-components/functions/checkLocation.ts'
-import { LinkRouterWrapper } from '../../../../shared-react-components/LinkRouterWrapper/LinkRouterWrapper.tsx'
+import { AlexLink } from '../AlexLink/AlexLink.tsx'
 
 
 interface IAlexSideNavigationItemProps {
@@ -43,7 +43,7 @@ export const AlexSideNavigationItem: FC<IAlexSideNavigationItemProps> = ({
     )
 
     return (<>
-        <LinkRouterWrapper to={path} disable={'/' + path === location.pathname}>
+        <AlexLink to={path} disable={'/' + path === location.pathname}>
             <Tooltip title={isContracted ? name : null} placement={'right'}>
                 <ListItemButton onClick={handleClick}
                                 sx={{
@@ -79,7 +79,7 @@ export const AlexSideNavigationItem: FC<IAlexSideNavigationItemProps> = ({
                     )}
                 </ListItemButton>
             </Tooltip>
-        </LinkRouterWrapper>
+        </AlexLink>
         {children && (
             <Collapse in={open && !isContracted}>
                 {children}

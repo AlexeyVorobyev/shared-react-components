@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom'
 import { Breadcrumbs, Typography, useTheme } from '@mui/material'
 import { constructPathLink } from '../../../../shared-react-components/functions/constructPathLink.ts'
 import { checkLocation } from '../../../../shared-react-components/functions/checkLocation.ts'
-import { LinkRouterWrapper } from '../../../../shared-react-components/LinkRouterWrapper/LinkRouterWrapper.tsx'
 import { APP_NAME } from '../../globalConstants.ts'
+import { AlexLink } from '../AlexLink/AlexLink.tsx'
 
 interface IBreadCrumbConfig {
     linkTo: string,
@@ -20,7 +20,7 @@ interface IAlexBreadCrumbs {
 export const AlexBreadCrumbs: FC<IAlexBreadCrumbs> = ({
                                                           nameMap,
                                                           allowedLinks,
-                                                          forbiddenLinks = []
+                                                          forbiddenLinks = [],
                                                       }) => {
     const theme = useTheme()
     const location = useLocation()
@@ -41,28 +41,28 @@ export const AlexBreadCrumbs: FC<IAlexBreadCrumbs> = ({
         return breadCrumbsConfig.map((item) => {
             const allowLink = !forbiddenLinks.includes(item.linkTo) && allowedLinks.includes(item.linkTo)
             return (
-                <LinkRouterWrapper
+                <AlexLink
                     tooltipTitle={'Перейти'}
                     key={item.linkTo}
                     to={allowLink ? item.linkTo : null}>
                     <Typography variant={'subtitle2'}
                                 color={checkLocation(location.pathname, item.linkTo) ? theme.palette.secondary.main : allowLink ? '#000000' : '#777777'}
                                 height={'24px'}>{item.name}</Typography>
-                </LinkRouterWrapper>
+                </AlexLink>
             )
         })
     }, [pathArr])
 
     return (
         <Breadcrumbs>
-            <LinkRouterWrapper
+            <AlexLink
                 to={'/'}
                 tooltipTitle={'Перейти'}
                 key={'/'}>
                 <Typography variant={'subtitle2'}
                             color={checkLocation(location.pathname, '/') ? theme.palette.secondary.main : '#000000'}
                             height={'24px'}>{APP_NAME.toUpperCase()}</Typography>
-            </LinkRouterWrapper>
+            </AlexLink>
             {constructBreadCrumbs()}
         </Breadcrumbs>
     )
