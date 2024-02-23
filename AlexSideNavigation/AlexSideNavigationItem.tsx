@@ -3,7 +3,7 @@ import { Collapse, ListItemButton, ListItemIcon, ListItemText, Tooltip, Typograp
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { useLocation } from 'react-router-dom'
 import { theme } from '../../components/theme/theme.ts'
-import { checkLocation } from '../../../../shared-react-components/functions/checkLocation.ts'
+import { checkLocation } from '../functions/checkLocation.ts'
 import { AlexLink } from '../AlexLink/AlexLink.tsx'
 
 

@@ -1,8 +1,8 @@
 import { FC, useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Breadcrumbs, Typography, useTheme } from '@mui/material'
-import { constructPathLink } from '../../../../shared-react-components/functions/constructPathLink.ts'
-import { checkLocation } from '../../../../shared-react-components/functions/checkLocation.ts'
+import { constructPathLink } from '../functions/constructPathLink.ts'
+import { checkLocation } from '../functions/checkLocation.ts'
 import { APP_NAME } from '../../globalConstants.ts'
 import { AlexLink } from '../AlexLink/AlexLink.tsx'
 
