@@ -1,46 +1,39 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
-import { AlexInput } from './AlexInput.tsx'
+import { AlexInput, IAlexInputProps } from './AlexInput.tsx'
 
 export enum EInputType {
     email = 'email',
     password = 'password'
 }
 
-interface IProps {
+interface IProps extends Omit<IAlexInputProps, 'value' | 'onChange'> {
     name: string
-    defaultValue?: string
-    label?: string
     required?: boolean
     validateFunctions?: {
         [key: string
             ]:
             (valueToCheck: string) => boolean | string
     }
-    error?: boolean,
-    errorText?: string
-    hidden?: boolean
-    multiline?: boolean
-    maxRows?: number
-    inputType?: EInputType
 }
 
 const DEBUG = false
 const DEBUG_PREFIX = 'ALEX_INPUT'
 
-export const AlexInputControlled: React.FC<IProps> = ({
-                                                          name,
-                                                          defaultValue,
-                                                          label,
-                                                          required = false,
-                                                          validateFunctions = undefined,
-                                                          error = false,
-                                                          errorText = undefined,
-                                                          hidden = false,
-                                                          multiline = false,
-                                                          maxRows,
-                                                          inputType = undefined,
-                                                      }) => {
+export const AlexInputControlled: FC<IProps> = ({
+                                                    name,
+                                                    defaultValue,
+                                                    label,
+                                                    required = false,
+                                                    validateFunctions = undefined,
+                                                    error = false,
+                                                    errorText = undefined,
+                                                    hidden = false,
+                                                    multiline = false,
+                                                    maxRows,
+                                                    inputType = undefined,
+                                                    ...props
+                                                }) => {
 
     const { control } = useFormContext()
 
@@ -59,7 +52,8 @@ export const AlexInputControlled: React.FC<IProps> = ({
                 DEBUG && console.log(DEBUG_PREFIX, 'value', value)
                 return (
                     <AlexInput onChange={onChange} value={value} error={error} label={label} maxRows={maxRows}
-                               multiline={multiline} errorText={errorText} inputType={inputType} hidden={hidden}/>
+                               multiline={multiline} errorText={errorText} inputType={inputType}
+                               hidden={hidden} {...props}/>
                 )
             }
             }
