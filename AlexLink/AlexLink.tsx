@@ -1,5 +1,5 @@
-import { CSSProperties, FC, ReactNode } from 'react'
-import { Link, To, useNavigate, useSearchParams } from 'react-router-dom'
+import { CSSProperties, FC, ReactNode, useCallback } from 'react'
+import { Link, To, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { Box, SxProps, Theme, Tooltip } from '@mui/material'
 
 interface IAlexLinkProps {
@@ -10,6 +10,7 @@ interface IAlexLinkProps {
     sx?: SxProps<Theme>
     tooltipTitle?: string
     disable?: boolean
+    saveSearchParams?: boolean
 }
 
 /**
@@ -23,6 +24,7 @@ export const AlexLink: FC<IAlexLinkProps> = ({
                                                  sx,
                                                  tooltipTitle,
                                                  disable = false,
+                                                 saveSearchParams = false,
                                              }) => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
@@ -39,6 +41,8 @@ export const AlexLink: FC<IAlexLinkProps> = ({
         }
     }
 
+    const { search } = useLocation()
+
     return (<>
         {(to && !disable) ? (
             <Tooltip title={tooltipTitle ? tooltipTitle : ''}>
@@ -48,7 +52,7 @@ export const AlexLink: FC<IAlexLinkProps> = ({
                     </Box>
                 ) : (
                     <Link
-                        to={to as string}
+                        to={saveSearchParams ? to + search : to as string}
                         relative={relative ? relative : undefined}
                         style={{ textDecoration: 'none', ...sx as CSSProperties }}>
                         {children}

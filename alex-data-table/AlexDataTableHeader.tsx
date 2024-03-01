@@ -1,23 +1,23 @@
 import React, { FC, useMemo } from 'react'
 import { Chip, Divider, Stack, Typography, useTheme } from '@mui/material'
-import { ICustomDataTableColumn } from './AlexDataTable'
 import { AlexDataTableSimpleFilter } from './AlexDataTableSimpleFilter'
 import { AlexDataTableColumnsSelect } from './AlexDataTableColumnsSelect'
 import { AlexFilters } from '../AlexFilters/AlexFilters'
 import { AlexDataTableDownloadCSV } from './AlexDataTableDownloadCSV'
 import { IAlexFilter } from '../AlexFilters/AlexFilter.tsx'
+import { TCustomDataTableColumn } from './alex-data-table.component.tsx'
 
 interface IProps {
     simpleFilter: boolean
     columnsSelect: boolean
-    columnsState: ICustomDataTableColumn[]
-    setColumnsState: React.Dispatch<React.SetStateAction<ICustomDataTableColumn[]>>,
+    columnsState: TCustomDataTableColumn[]
+    setColumnsState: React.Dispatch<React.SetStateAction<TCustomDataTableColumn[]>>,
     filterListIds?: string[]
     serverSideOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
     downloadCSV: boolean
     data?: Object[]
-    columns: ICustomDataTableColumn[]
+    columns: TCustomDataTableColumn[]
     filtersMap: Map<string, IAlexFilter>
 }
 

@@ -1,17 +1,22 @@
-import React, {FC, useCallback, useMemo} from "react";
-import {IconButton, Tooltip} from "@mui/material";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import {EFormatFlatDataMode, formatFlatData, ICustomDataTableColumn, ICustomDataTableRow} from "./AlexDataTable";
+import React, { FC, useCallback, useMemo } from 'react'
+import { IconButton, Tooltip } from '@mui/material'
+import FileDownloadIcon from '@mui/icons-material/FileDownload'
+import {
+    EFormatFlatDataMode,
+    formatFlatData,
+    TCustomDataTableColumn,
+    TCustomDataTableRow,
+} from './alex-data-table.component.tsx'
 
 interface IProps {
-    columnsState: ICustomDataTableColumn[]
-    columns: ICustomDataTableColumn[]
+    columnsState: TCustomDataTableColumn[]
+    columns: TCustomDataTableColumn[]
     data?: Object[]
 }
 
 const constructCsv = (
-    columnsState: ICustomDataTableColumn[],
-    data: ICustomDataTableRow[],
+    columnsState: TCustomDataTableColumn[],
+    data: TCustomDataTableRow[],
     separator: string = ';') => {
 
     const transparentMatrix = <T, >(matrix: T[][]) => {
@@ -43,7 +48,7 @@ const constructCsv = (
 
     return [
         columnNames,
-        matrix && matrix.map((row) => row.join(separator)).join('\n')
+        matrix && matrix.map((row) => row.join(separator)).join('\n'),
     ].join('\n')
 }
 
@@ -51,21 +56,21 @@ const DEBUG = true
 export const AlexDataTableDownloadCSV: FC<IProps> = ({
                                                          data,
                                                          columnsState,
-                                                         columns
+                                                         columns,
                                                      }) => {
-    const rows = useMemo(() => formatFlatData(columns,EFormatFlatDataMode.text, data), [data, columnsState])
+    const rows = useMemo(() => formatFlatData(columns, EFormatFlatDataMode.text, data), [data, columnsState])
 
     const handleClick = useCallback(() => {
         DEBUG && console.debug('rows', rows)
         if (!rows) return
-        const dataCsv = new Blob(["\ufeff", constructCsv(columnsState, rows, ';')], {type: 'text/csv'})
-        const contentType = 'csv';
-        const a = document.createElement('a');
-        a.download = 'dataTable.csv';
-        a.href = window.URL.createObjectURL(new File([dataCsv], 'dataTable',));
-        a.textContent = 'Download CSV';
-        a.dataset.downloadurl = [contentType, a.download, a.href].join(':');
-        document.body.appendChild(a);
+        const dataCsv = new Blob(['\ufeff', constructCsv(columnsState, rows, ';')], { type: 'text/csv' })
+        const contentType = 'csv'
+        const a = document.createElement('a')
+        a.download = 'dataTable.csv'
+        a.href = window.URL.createObjectURL(new File([dataCsv], 'dataTable'))
+        a.textContent = 'Download CSV'
+        a.dataset.downloadurl = [contentType, a.download, a.href].join(':')
+        document.body.appendChild(a)
         a.click()
         a.remove()
     }, [rows, data, columnsState])

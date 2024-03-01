@@ -8,13 +8,12 @@ import TableRow from '@mui/material/TableRow'
 import { Box, CircularProgress, Divider, Stack, Typography } from '@mui/material'
 import { AlexDataTableFooter } from './AlexDataTableFooter'
 import { useNavigate } from 'react-router-dom'
-import { AlexDataTableActions } from './AlexDataTableActions'
-import { MutationTrigger } from '@reduxjs/toolkit/dist/query/react/buildHooks'
+import { AlexDataTableActions } from './alex-data-table-actions.component.tsx'
 import { AlexDataTableHeader } from './AlexDataTableHeader'
 import { AlexDataTableSortWrapper } from './AlexDataTableSortWrapper'
 import { IAlexFilter } from '../AlexFilters/AlexFilter.tsx'
 
-export interface ICustomDataTableColumn {
+export type TCustomDataTableColumn = {
     id: string,
     label: string,
     align?: 'center' | 'left' | 'right' | 'inherit' | 'justify',
@@ -26,28 +25,34 @@ export interface ICustomDataTableColumn {
     link?: boolean
 }
 
-export type ICustomDataTableRow = Map<string, ReactNode>
+export type TCustomDataTableRow = Map<string, ReactNode>
 
-export interface IActionConfig {
+export type TActionConfig = {
     columnName: string // номер столбца для использования в роли id
     path: string // путь к странице
     params: URLSearchParams
 }
 
-export interface IActionsConfig {
-    view?: IActionConfig,
-    edit?: IActionConfig
+export enum EActionDeleteType {
+    reduxToolkit = 'reduxToolkit',
+    apolloClient = 'apolloClient'
+}
+
+export type TActionsConfig = {
+    view?: TActionConfig,
+    edit?: TActionConfig
     delete?: {
         columnName: string // номер столбца для использования в роли id
-        mutation: MutationTrigger<any>// useMutation из RTK
+        mutation: Function
         showModal?: boolean // показывать ли модальное окно для удаления, по дефолту есть
+        type: EActionDeleteType
     }
 }
 
-interface IProps {
-    columns: ICustomDataTableColumn[],
+interface IAlexDataTableProps {
+    columns: TCustomDataTableColumn[],
     data?: Object[]
-    actionsConfig?: IActionsConfig
+    actionsConfig?: TActionsConfig
     availablePages?: number,
     availableElements?: number
     perPageOptions?: string[]
@@ -70,10 +75,10 @@ export enum EFormatFlatDataMode {
 }
 
 export const formatFlatData = (
-    columns: ICustomDataTableColumn[],
+    columns: TCustomDataTableColumn[],
     mode: `${EFormatFlatDataMode}`,
     data?: Object[],
-): ICustomDataTableRow[] | null => {
+): TCustomDataTableRow[] | null => {
     if (!data) return null
     const resultArr = []
     for (const item of data) {
@@ -101,7 +106,7 @@ export const formatFlatData = (
     return resultArr
 }
 
-export const AlexDataTable: FC<IProps> = ({
+export const AlexDataTable: FC<IAlexDataTableProps> = ({
                                               columns,
                                               data,
                                               actionsConfig,
@@ -117,12 +122,11 @@ export const AlexDataTable: FC<IProps> = ({
                                               downloadCSV = false,
                                               filtersMap,
                                           }) => {
-
     DEBUG && console.log(DEBUG_PREFIX, 'DATA', data)
 
-    const [columnsState, setColumnsState] = useState<ICustomDataTableColumn[]>(
+    const [columnsState, setColumnsState] = useState<TCustomDataTableColumn[]>(
         sessionStorage.getItem(`columnsDataBase${location.pathname}`)
-            ? JSON.parse(sessionStorage.getItem(`columnsDataBase${location.pathname}`)!) as ICustomDataTableColumn[]
+            ? JSON.parse(sessionStorage.getItem(`columnsDataBase${location.pathname}`)!) as TCustomDataTableColumn[]
             : columns,
     )
 
@@ -135,31 +139,37 @@ export const AlexDataTable: FC<IProps> = ({
 
     return (
         <Stack sx={{ height: '100%', width: '100%' }} direction={'column'} useFlexGap>
-            {(simpleFilter || columnsSelect) &&
+            {(simpleFilter || columnsSelect) && (
                 <AlexDataTableHeader simpleFilter={simpleFilter} columnsSelect={columnsSelect}
                                      columnsState={columnsState} setColumnsState={setColumnsState}
                                      filterListIds={filterListIds} setServerSideOptions={setServerSideOptions}
                                      serverSideOptions={serverSideOptions} downloadCSV={downloadCSV} data={data}
-                                     columns={columns} filtersMap={filtersMap}/>}
-            {!rows && (<Box sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
-                <CircularProgress/>
-            </Box>)}
-            {rows && !rows.length && (<Box sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
-                <Typography variant={'h5'}>Данных по заданным параметрам нет</Typography>
-            </Box>)}
-            {(rows && rows.length) ? (<TableContainer sx={{
+                                     columns={columns} filtersMap={filtersMap}/>
+            )}
+            {!rows && (
+                <Box sx={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    <CircularProgress/>
+                </Box>
+            )}
+            {(rows && !rows.length) && (
+                <Box sx={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    <Typography variant={'h5'}>Данных по заданным параметрам нет</Typography>
+                </Box>
+            )}
+            {(rows && rows.length) ? (
+                <TableContainer sx={{
                     width: '100%',
                     height: '100%',
                 }}>
@@ -194,7 +204,8 @@ export const AlexDataTable: FC<IProps> = ({
                             {rows.map((row, index) => {
                                 return (
                                     <TableRow hover={Boolean(actionsConfig?.view)}
-                                              sx={{ cursor: actionsConfig?.view ? 'pointer' : undefined }} role="checkbox"
+                                              sx={{ cursor: actionsConfig?.view ? 'pointer' : undefined }}
+                                              role="checkbox"
                                               tabIndex={-1} key={index}
                                               onDoubleClick={actionsConfig?.view ? () => {
                                                   navigate(`${actionsConfig?.view?.path!}?id=${row.get(actionsConfig!.view!.columnName)}${actionsConfig!.view!.params ? '&' + actionsConfig!.view!.params.toString() : ''}`)
@@ -220,15 +231,17 @@ export const AlexDataTable: FC<IProps> = ({
                             })}
                         </TableBody>
                     </Table>
-                </TableContainer>) :
-                undefined
-            }
-            {footer && (<Box marginTop={'auto'} width={'100%'}>
-                <Divider/>
-                <AlexDataTableFooter availablePages={availablePages} perPageOptions={perPageOptions}
-                                     availableElements={availableElements} setServerSideOptions={setServerSideOptions}
-                                     serverSideOptions={serverSideOptions}/>
-            </Box>)}
+                </TableContainer>
+            ) : undefined}
+            {footer && (
+                <Box marginTop={'auto'} width={'100%'}>
+                    <Divider/>
+                    <AlexDataTableFooter availablePages={availablePages} perPageOptions={perPageOptions}
+                                         availableElements={availableElements}
+                                         setServerSideOptions={setServerSideOptions}
+                                         serverSideOptions={serverSideOptions}/>
+                </Box>
+            )}
         </Stack>
     )
 }

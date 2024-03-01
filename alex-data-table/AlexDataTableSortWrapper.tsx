@@ -1,9 +1,9 @@
 import React, {FC, ReactNode, useLayoutEffect, useState} from "react";
-import {ICustomDataTableColumn} from "./AlexDataTable";
 import {TableSortLabel, Tooltip} from "@mui/material";
+import { TCustomDataTableColumn } from './alex-data-table.component.tsx'
 
 interface IProps {
-    column: ICustomDataTableColumn
+    column: TCustomDataTableColumn
     children: ReactNode
     serverSideOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>

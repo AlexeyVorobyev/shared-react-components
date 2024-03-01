@@ -2,11 +2,11 @@ import { IconButton, Popover, Stack, Tooltip, Typography, useTheme } from '@mui/
 import React, {FC, useState} from "react";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
 import Checkbox from "@mui/material/Checkbox";
-import {ICustomDataTableColumn} from "./AlexDataTable";
+import { TCustomDataTableColumn } from './alex-data-table.component.tsx'
 
 interface IProps {
-    columnsState: ICustomDataTableColumn[]
-    setColumnsState: React.Dispatch<React.SetStateAction<ICustomDataTableColumn[]>>
+    columnsState: TCustomDataTableColumn[]
+    setColumnsState: React.Dispatch<React.SetStateAction<TCustomDataTableColumn[]>>
 }
 
 export const AlexDataTableColumnsSelect:FC<IProps> = ({
