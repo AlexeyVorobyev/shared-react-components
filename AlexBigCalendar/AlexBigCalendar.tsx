@@ -3,7 +3,7 @@ import { Box, CircularProgress, Grid, IconButton, Stack, Typography, useTheme } 
 import {AlexBigCalendarHeaders} from "./AlexBigCalendarHeaders.tsx"
 import {AlexBigCalendarFiller} from "./AlexBigCalendarFiller.tsx"
 import {MAP_NUMBER_TO_MONTH_RUS} from "./AlexBigCalendarGlobaConstants.ts"
-import {AlexIcon} from "../AlexIcon/AlexIcon.tsx"
+import {AlexIcon} from "../alex-icon/alex-icon.component.tsx"
 
 export type TTagEntity = {
 	tagId: number,

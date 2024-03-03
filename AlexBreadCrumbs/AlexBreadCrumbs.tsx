@@ -39,7 +39,9 @@ export const AlexBreadCrumbs: FC<IAlexBreadCrumbs> = ({
         }
 
         return breadCrumbsConfig.map((item) => {
-            const allowLink = !forbiddenLinks.includes(item.linkTo) && allowedLinks.includes(item.linkTo)
+            const allowLink = !forbiddenLinks.includes(item.linkTo)
+                && allowedLinks.includes(item.linkTo)
+                && !checkLocation(location.pathname, item.linkTo)
             return (
                 <AlexLink
                     tooltipTitle={'Перейти'}

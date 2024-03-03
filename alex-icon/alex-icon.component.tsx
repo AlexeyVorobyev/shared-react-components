@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { EIconToNameMap, IconToNameMap } from './AlexIconIconToNameMap.ts'
+import { EIconToNameMap, IconToNameMap } from './alex-icon-icon-to-name-map.data.ts'
 import { SvgIconProps } from '@mui/material'
 
 interface IAlexIconProps extends SvgIconProps {

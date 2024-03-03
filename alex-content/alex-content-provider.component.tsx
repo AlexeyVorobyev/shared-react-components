@@ -43,8 +43,8 @@ export const AlexContentProvider: FC<IAlexContentProviderProps> = ({
                     zIndex: 100
                 }}>
                     <Stack justifyContent={'center'} direction={'column'}
-                           padding={theme.spacing(1)} borderRadius={8}
-                           sx={{ backgroundColor: config?.menuBackgroundColor || '#F7F8FB' }}>
+                           padding={theme.spacing(1)} borderRadius={'8px'}
+                           sx={{ backgroundColor: config?.menuBackgroundColor || '#F7F7F7' }}>
                         {pointConfig.map((item) => (
                             <AlexContentMenuItem paperHovered={paperHovered}
                                                  config={{
@@ -56,7 +56,7 @@ export const AlexContentProvider: FC<IAlexContentProviderProps> = ({
                 </Box>
             </Grid>
             <Grid item xs={config?.ratioMenuPoints?.length ? config.ratioMenuPoints[1] : 10}>
-                <Stack direction={'column'} gap={theme.spacing(2)}>
+                <Stack direction={'column'} gap={theme.spacing(3)}>
                     {pointConfig.map((item) => (
                         <AlexContentPoint name={item.name} title={item.title} setPaperHovered={setPaperHovered}>
                             {item.body}

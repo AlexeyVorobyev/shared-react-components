@@ -40,7 +40,7 @@ export const AlexSideNavigation: FC<IAlexSideNavigationProps> = ({ config }) => 
             sx={{
                 width: isContracted ? '58px' : '400px',
                 boxShadow: 2,
-                transition: 'all 1s',
+                transition: 'width 1s',
             }}
         >
             <List sx={{ padding: '0', overflow: 'hidden' }}>

@@ -1,6 +1,13 @@
-import React from "react";
-import {InputLabel, ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps, ToggleButtonOwnProps} from "@mui/material";
-import {Controller, useFormContext} from "react-hook-form";
+import React from 'react'
+import {
+    FormControl,
+    InputLabel,
+    ToggleButton,
+    ToggleButtonGroup,
+    ToggleButtonGroupProps,
+    ToggleButtonOwnProps,
+} from '@mui/material'
+import { Controller, useFormContext } from 'react-hook-form'
 
 interface Value {
     id: string,
@@ -33,7 +40,7 @@ export const AlexToggle: React.FC<IProps> = ({
                                                  enforceSelect = false,
                                                  ...props
                                              }) => {
-    const {control} = useFormContext()
+    const { control } = useFormContext()
 
     return (
         <Controller
@@ -43,25 +50,28 @@ export const AlexToggle: React.FC<IProps> = ({
             rules={{
                 validate: {
                     required: required ? (value: string) => value || 'обязательное поле' : () => true,
-                }
+                },
             }}
-            render={({field: {onChange, value}}) => {
+            render={({ field: { onChange, value } }) => {
                 DEBUG && console.log(DEBUG_PREFIX, 'value', value)
-                return (<>
-                    <InputLabel>{error && errorText ? `${label}, ${errorText}` : label}</InputLabel>
-                    <ToggleButtonGroup
-                        value={value}
-                        exclusive={exclusive}
-                        onChange={(event, value) => {
-                            if (enforceSelect && !value) return
-                            onChange(value)
-                        }}
-                        {...props}
-                    >
-                        {options.map((option) => <ToggleButton key={option.id}
-                                                               value={option.id}>{option.name}</ToggleButton>)}
-                    </ToggleButtonGroup>
-                </>)
+                return (
+                    <FormControl fullWidth>
+                        <InputLabel>{error && errorText ? `${label}, ${errorText}` : label}</InputLabel>
+                        <ToggleButtonGroup
+                            value={value}
+                            exclusive={exclusive}
+                            onChange={(event, value) => {
+                                if (enforceSelect && !value) return
+                                onChange(value)
+                            }}
+                            fullWidth
+                            {...props}
+                        >
+                            {options.map((option) => <ToggleButton key={option.id}
+                                                                   value={option.id}>{option.name}</ToggleButton>)}
+                        </ToggleButtonGroup>
+                    </FormControl>
+                )
             }
             }
         />

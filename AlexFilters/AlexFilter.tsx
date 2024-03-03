@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react'
+import React, { FC, ReactElement } from 'react'
 import { Stack, Typography, useTheme } from '@mui/material'
 
 export interface IAlexFilter {
@@ -8,18 +8,22 @@ export interface IAlexFilter {
 
 interface IProps {
     config: IAlexFilter
+    id: string
 }
 
 export const AlexFilter: FC<IProps> = ({
-                                           config
+                                           config,
+                                           id,
                                        }) => {
     const theme = useTheme()
-    const {label, component} = config
+    const { label, component } = config
 
     return (
         <Stack direction={'column'} spacing={theme.spacing(1)}>
             <Typography variant={'h6'}>{label}</Typography>
-            {component}
+            {React.cloneElement(component, {
+                'name': id,
+            })}
         </Stack>
     )
 }

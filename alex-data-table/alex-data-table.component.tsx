@@ -59,7 +59,7 @@ interface IAlexDataTableProps {
     simpleFilter?: boolean
     columnsSelect?: boolean
     footer?: boolean
-    filterListIds?: string[],
+    filterListIds?: (string | [string, string])[],
     serverSideOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
     downloadCSV?: boolean
@@ -107,21 +107,21 @@ export const formatFlatData = (
 }
 
 export const AlexDataTable: FC<IAlexDataTableProps> = ({
-                                              columns,
-                                              data,
-                                              actionsConfig,
-                                              availablePages,
-                                              perPageOptions = ['1', '2', '4', '8', '16', '32'],
-                                              simpleFilter = false,
-                                              columnsSelect = false,
-                                              availableElements,
-                                              footer = false,
-                                              filterListIds,
-                                              setServerSideOptions,
-                                              serverSideOptions,
-                                              downloadCSV = false,
-                                              filtersMap,
-                                          }) => {
+                                                           columns,
+                                                           data,
+                                                           actionsConfig,
+                                                           availablePages,
+                                                           perPageOptions = ['1', '2', '4', '8', '16', '32'],
+                                                           simpleFilter = false,
+                                                           columnsSelect = false,
+                                                           availableElements,
+                                                           footer = false,
+                                                           filterListIds,
+                                                           setServerSideOptions,
+                                                           serverSideOptions,
+                                                           downloadCSV = false,
+                                                           filtersMap,
+                                                       }) => {
     DEBUG && console.log(DEBUG_PREFIX, 'DATA', data)
 
     const [columnsState, setColumnsState] = useState<TCustomDataTableColumn[]>(

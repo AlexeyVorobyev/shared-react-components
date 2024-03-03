@@ -12,7 +12,7 @@ interface IProps {
     columnsSelect: boolean
     columnsState: TCustomDataTableColumn[]
     setColumnsState: React.Dispatch<React.SetStateAction<TCustomDataTableColumn[]>>,
-    filterListIds?: string[]
+    filterListIds?: (string | [string, string])[]
     serverSideOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
     downloadCSV: boolean
