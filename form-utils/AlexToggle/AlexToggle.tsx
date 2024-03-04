@@ -49,13 +49,12 @@ export const AlexToggle: React.FC<IProps> = ({
             control={control}
             rules={{
                 validate: {
-                    required: required ? (value: string) => value || 'обязательное поле' : () => true,
+                    required: required ? (value: string) => value?.length > 0 || 'обязательное поле' : () => true,
                 },
             }}
             render={({ field: { onChange, value } }) => {
                 DEBUG && console.log(DEBUG_PREFIX, 'value', value)
-                return (
-                    <FormControl fullWidth>
+                return (<>
                         <InputLabel>{error && errorText ? `${label}, ${errorText}` : label}</InputLabel>
                         <ToggleButtonGroup
                             value={value}
@@ -67,11 +66,13 @@ export const AlexToggle: React.FC<IProps> = ({
                             fullWidth
                             {...props}
                         >
-                            {options.map((option) => <ToggleButton key={option.id}
-                                                                   value={option.id}>{option.name}</ToggleButton>)}
+                            {options.map((option) => (
+                                <ToggleButton key={option.id} value={option.id}>
+                                    {option.name}
+                                </ToggleButton>
+                            ))}
                         </ToggleButtonGroup>
-                    </FormControl>
-                )
+                </>)
             }
             }
         />

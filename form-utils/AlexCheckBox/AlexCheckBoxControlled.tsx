@@ -17,6 +17,7 @@ export const AlexCheckBoxControlled: FC<IAlexCheckBoxControlledProps> = ({
         <Controller
             name={name}
             control={control}
+            defaultValue={false}
             render={({ field: { onChange, value } }) => {
                 return (value == false || value) && (
                     <AlexCheckBox onChange={onChange} checked={value} value={value}

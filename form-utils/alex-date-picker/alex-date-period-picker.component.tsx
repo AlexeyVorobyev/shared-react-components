@@ -23,8 +23,8 @@ export const AlexDatePeriodPicker: FC<IAlexDatePeriodPickerProps> = ({
                                                                      }) => {
     const theme = useTheme()
 
-    const [firstValue, setFirstValue] = useState<string>(value?.startDate || new Date().toString())
-    const [secondValue, setSecondValue] = useState<string>(value?.finishDate || new Date().toString())
+    const [firstValue, setFirstValue] = useState<string>(value?.startDate)
+    const [secondValue, setSecondValue] = useState<string>(value?.finishDate)
 
     useLayoutEffect(() => {
         if (value?.startDate) {

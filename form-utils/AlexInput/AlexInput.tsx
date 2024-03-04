@@ -66,7 +66,7 @@ export const AlexInput: FC<IAlexInputProps> = ({
                 maxRows={maxRows}
                 {...props}
                 InputLabelProps={{
-                    shrink: localValueInit,
+                    shrink: localValueInit && Boolean(value?.length),
                 }}
                 InputProps={{
                     onAnimationStart: makeAnimationStartHandler,
