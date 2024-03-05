@@ -78,7 +78,7 @@ export const AlexDataTableFooter: FC<IProps> = ({
                 </FormControl>
             </Stack>
             <Pagination
-                count={(booleanNumber(availablePages) ? availablePages : Number(savedAvailablePages.current) || 10) || 1}
+                count={(booleanNumber(availablePages) ? availablePages : Number(savedAvailablePages.current) || 1) || 1}
                 page={Number(page) + 1}
                 color={'secondary'}
                 onChange={(event: any, value) => setPage((value - 1).toString())}/>

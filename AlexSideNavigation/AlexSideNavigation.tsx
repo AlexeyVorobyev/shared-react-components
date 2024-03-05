@@ -10,10 +10,14 @@ export type TSideNavigationConfig = {
 }
 
 interface IAlexSideNavigationProps {
-    config: TSideNavigationConfig[]
+    config: TSideNavigationConfig[],
+    enableOpenOnSelect?: boolean
 }
 
-export const AlexSideNavigation: FC<IAlexSideNavigationProps> = ({ config }) => {
+export const AlexSideNavigation: FC<IAlexSideNavigationProps> = ({
+                                                                     config,
+                                                                     enableOpenOnSelect = false,
+                                                                 }) => {
     const theme = useTheme()
     const [isContracted, setIsContracted] = useState<boolean>(true)
 

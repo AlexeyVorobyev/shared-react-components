@@ -14,6 +14,7 @@ interface IAlexSideNavigationItemProps {
     isContracted: boolean
     setIsContracted: React.Dispatch<React.SetStateAction<boolean>>
     children?: ReactNode
+    enableOpenOnSelect?: boolean
 }
 
 export const AlexSideNavigationItem: FC<IAlexSideNavigationItemProps> = ({
@@ -23,6 +24,7 @@ export const AlexSideNavigationItem: FC<IAlexSideNavigationItemProps> = ({
                                                                              isContracted,
                                                                              setIsContracted,
                                                                              children,
+                                                                             enableOpenOnSelect = false
                                                                          }) => {
 
     const [open, setOpen] = useState<boolean>(false)
@@ -32,13 +34,20 @@ export const AlexSideNavigationItem: FC<IAlexSideNavigationItemProps> = ({
 
     const handleClick = path ? (
         useCallback(() => {
-            setIsContracted(!isContracted)
+            if (enableOpenOnSelect) {
+                setIsContracted(!isContracted)
+            }
         }, [isContracted])
     ) : (
         useCallback(() => {
-            setIsContracted(false)
-            isContracted && setOpen(true)
-            !isContracted && setOpen(!open)
+            if (enableOpenOnSelect) {
+                setOpen(!open)
+            }
+            else {
+                setIsContracted(false)
+                isContracted && setOpen(true)
+                !isContracted && setOpen(!open)
+            }
         }, [open, isContracted])
     )
 

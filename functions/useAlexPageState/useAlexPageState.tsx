@@ -52,24 +52,22 @@ export const useAlexPageState = ({
     const initialSetStoredOptions = useCallback((modeList: EUsePageStateMode[]) => {
         let mode: EUsePageStateMode | undefined = undefined
 
-        modeList.forEach((item: EUsePageStateMode) => {
+        for (const item of modeList) {
             if (item === EUsePageStateMode.sessionStorage || item === EUsePageStateMode.localStorage) {
                 const stringValue = mode === EUsePageStateMode.sessionStorage
                     ? sessionStorage.getItem(storageKey)
                     : localStorage.getItem(storageKey)
                 if (stringValue) {
                     mode = item
-                } else {
-                    return
+                    break
                 }
             } else if (item === EUsePageStateMode.queryString) {
                 if (Array.from(searchParams.entries()).length) {
                     mode = item
-                } else {
-                    return
+                    break
                 }
             }
-        })
+        }
 
         if (mode === EUsePageStateMode.queryString) {
             const queryStringState = new Map(
