@@ -11,6 +11,7 @@ export interface IAlexCheckBoxProps extends Omit<CheckboxProps, 'color' | 'size'
     color?: TColor
     size?: number
     label?: string
+    justifyContent?: 'center' | 'start' | 'end'
 }
 
 /**
@@ -24,12 +25,13 @@ export const AlexCheckBox: FC<IAlexCheckBoxProps> = ({
                                                          size = 10,
                                                          label,
                                                          value,
+                                                         justifyContent = 'center',
                                                          ...props
                                                      }) => {
     const theme = useTheme()
 
     return (
-        <Stack alignItems={'center'} justifyContent={'center'}
+        <Stack alignItems={'center'} justifyContent={justifyContent}
                height={'100%'} width={'100%'} direction={'row'}
                spacing={theme.spacing(2)}>
             <Checkbox

@@ -40,7 +40,7 @@ export const AlexInputControlled: FC<IProps> = ({
     return (
         <Controller
             name={name}
-            defaultValue={defaultValue || ''}
+            defaultValue={defaultValue}
             control={control}
             rules={{
                 validate: {

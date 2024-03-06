@@ -1,17 +1,15 @@
 import { FC } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
-import { AlexDatePicker, EDatePickerType, IAlexDatePickerProps } from './alex-date-picker.component.tsx'
+import { AlexDatePicker, TAlexDatePickerPropsOmit } from './alex-date-picker.component.tsx'
 
-interface IAlexDatePickerControlledProps extends Omit<IAlexDatePickerProps, 'value' | 'onChange'> {
+type TAlexDatePickerControlledProps = {
     name: string
     label: string,
-    type?: EDatePickerType | `${EDatePickerType}`
-}
+} & TAlexDatePickerPropsOmit
 
-export const AlexDatePickerControlled: FC<IAlexDatePickerControlledProps> = ({
+export const AlexDatePickerControlled: FC<TAlexDatePickerControlledProps> = ({
                                                                                  name,
                                                                                  label,
-                                                                                 type = EDatePickerType.date,
                                                                                  ...props
                                                                              }) => {
     const { control } = useFormContext()
@@ -22,7 +20,7 @@ export const AlexDatePickerControlled: FC<IAlexDatePickerControlledProps> = ({
             control={control}
             render={({ field: { onChange, value } }) => (
                 <AlexDatePicker value={value} onChange={onChange}
-                                label={label} type={type} {...props}/>
+                                label={label} {...props}/>
             )}/>
     )
 }

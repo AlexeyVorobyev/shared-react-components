@@ -32,7 +32,7 @@ export type TAlexDatePickerPropsOmit =
     TAlexDatePickerPropsCommonOmit
     & (TAlexDatePickerPropsDateTime | TAlexDatePickerPropsDate)
 
-type TAlexDatePickerProps =
+export type TAlexDatePickerProps =
     TAlexDatePickerPropsCommon
     & (TAlexDatePickerPropsDateTime | TAlexDatePickerPropsDate)
 
