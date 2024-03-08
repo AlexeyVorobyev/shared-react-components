@@ -34,7 +34,11 @@ export const AlexAutocomplete: FC<IAlexAutocompleteProps> = ({
                                                              }) => {
 
     const handledValue = useMemo(() => {
-        console.log(value, options)
+        if (value === undefined) {
+            return multiple
+                ? []
+                : null
+        }
         const findOption = (value: string) => (
             options
                 .find((option) => option.id === value)
@@ -42,16 +46,14 @@ export const AlexAutocomplete: FC<IAlexAutocompleteProps> = ({
         )
 
         if (Array.isArray(value)) {
-            if (!multiple) {
-                return findOption(value[0])
-            }
-            return value.map((item) => findOption(item))
+            return multiple
+                ? value.map((item) => findOption(item))
+                : findOption(value[0])
         }
 
-        if (multiple) {
-            return [findOption(value)]
-        }
-        return findOption(value)
+        return multiple
+            ? [findOption(value)]
+            : findOption(value)
     }, [value, options])
 
     const handleOnChange = useCallback((value: TAlexAutocompleteOption | TAlexAutocompleteOption[] | null) => {

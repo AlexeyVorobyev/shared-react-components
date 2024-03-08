@@ -1,13 +1,15 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactElement, ReactNode, useState } from 'react'
 import { Box, Grid, Stack, useTheme } from '@mui/material'
 import { AlexContentPoint } from './alex-content-point.component.tsx'
 import { AlexContentMenuItem } from './alex-content-menu-item.component.tsx'
+import { theme } from '../../components/theme/theme.ts'
 
 export type TAlexContentPointConfig = {
     name: string
-    display?: boolean
     title: string
     body: ReactNode
+    contractible?: boolean
+    open?: boolean
 }
 
 export type TAlexContentConfig = {
@@ -56,9 +58,18 @@ export const AlexContentProvider: FC<IAlexContentProviderProps> = ({
                 </Box>
             </Grid>
             <Grid item xs={config?.ratioMenuPoints?.length ? config.ratioMenuPoints[1] : 10}>
-                <Stack direction={'column'} gap={theme.spacing(3)}>
+                <Stack direction={'column'} gap={theme.spacing(3)} sx={{
+                    '&::after': {
+                        content: '""',
+                        display: 'block',
+                        bottom: `-${theme.spacing(2)}`,
+                        height: 0,
+                    },
+                }}>
                     {pointConfig.map((item) => (
-                        <AlexContentPoint name={item.name} title={item.title} setPaperHovered={setPaperHovered}>
+                        <AlexContentPoint name={item.name} title={item.title}
+                                          contractible={item.contractible} open={item.open}
+                                          setPaperHovered={setPaperHovered}>
                             {item.body}
                         </AlexContentPoint>
                     ))}

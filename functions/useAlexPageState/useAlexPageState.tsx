@@ -54,7 +54,7 @@ export const useAlexPageState = ({
 
         for (const item of modeList) {
             if (item === EUsePageStateMode.sessionStorage || item === EUsePageStateMode.localStorage) {
-                const stringValue = mode === EUsePageStateMode.sessionStorage
+                const stringValue = item === EUsePageStateMode.sessionStorage
                     ? sessionStorage.getItem(storageKey)
                     : localStorage.getItem(storageKey)
                 if (stringValue) {

@@ -10,7 +10,7 @@ import { AlexDataTableFooter } from './AlexDataTableFooter'
 import { useNavigate } from 'react-router-dom'
 import { AlexDataTableActions } from './alex-data-table-actions.component.tsx'
 import { AlexDataTableHeader } from './AlexDataTableHeader'
-import { AlexDataTableSortWrapper } from './AlexDataTableSortWrapper'
+import { AlexDataTableSortWrapper } from './alex-data-table-sort-wrapper.component.tsx'
 import { IAlexFilter } from '../AlexFilters/AlexFilter.tsx'
 
 export type TCustomDataTableColumn = {
