@@ -32,6 +32,7 @@ export const AlexAutocomplete: FC<IAlexAutocompleteProps> = ({
                                                                  inputValue,
                                                                  onChangeInputValue,
                                                              }) => {
+    console.debug(inputValue)
 
     const handledValue = useMemo(() => {
         if (value === undefined) {

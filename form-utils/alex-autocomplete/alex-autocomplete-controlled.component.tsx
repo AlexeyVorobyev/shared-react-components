@@ -1,6 +1,6 @@
-import { FC, useState } from 'react'
-import { AlexAutocomplete, IAlexAutocompleteProps } from './alex-autocomplete.component.tsx'
-import { Controller, useFormContext } from 'react-hook-form'
+import {FC, useState} from 'react'
+import {AlexAutocomplete, IAlexAutocompleteProps} from './alex-autocomplete.component.tsx'
+import {Controller, useFormContext} from 'react-hook-form'
 
 interface IAlexAutocompleteControlledProps extends Omit<IAlexAutocompleteProps, 'value' | 'onChange' | 'inputValue' | 'onChangeInputValue'> {
     name: string
@@ -16,9 +16,13 @@ export const AlexAutocompleteControlled: FC<IAlexAutocompleteControlledProps> = 
                                                                                      required = false,
                                                                                      ...props
                                                                                  }) => {
-    const { control } = useFormContext()
+    const {control} = useFormContext()
 
     const [inputValue, onChangeInputValue] = useState<string>()
+
+    const handleChangeInputValue = (event: Event, value: string) => {
+        onChangeInputValue(value)
+    }
 
     return (
         <Controller
@@ -30,11 +34,11 @@ export const AlexAutocompleteControlled: FC<IAlexAutocompleteControlledProps> = 
                     ...validateFunctions,
                 },
             }}
-            render={({ field: { onChange, value } }) => {
+            render={({field: {onChange, value}}) => {
                 console.debug('ALEX AUTOCOMPLETE VALUE', value)
                 return (
                     <AlexAutocomplete value={value} onChange={onChange} {...props}
-                                      onChangeInputValue={onChangeInputValue} inputValue={inputValue}/>
+                                      onChangeInputValue={handleChangeInputValue} inputValue={inputValue}/>
                 )
             }}
         />
