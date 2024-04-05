@@ -13,7 +13,7 @@ interface IProps {
     columnsState: TCustomDataTableColumn[]
     setColumnsState: React.Dispatch<React.SetStateAction<TCustomDataTableColumn[]>>,
     filterListIds?: (string | [string, string])[]
-    serverSideOptions: Map<string, any>
+    storedOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
     downloadCSV: boolean
     data?: Object[]
@@ -28,7 +28,7 @@ export const AlexDataTableHeader: FC<IProps> = ({
                                                     columnsSelect,
                                                     setColumnsState,
                                                     filterListIds,
-                                                    serverSideOptions,
+                                                    storedOptions,
                                                     setServerSideOptions,
                                                     downloadCSV,
                                                     data,
@@ -37,9 +37,9 @@ export const AlexDataTableHeader: FC<IProps> = ({
     const theme = useTheme()
     const amountOfChosenFilters = useMemo(() => {
         if (!filterListIds) return 0
-        return Array.from(serverSideOptions)
+        return Array.from(storedOptions)
             .filter((param) => [...filterListIds, 'simpleFilter'].includes(param[0])).length
-    }, [serverSideOptions, filterListIds])
+    }, [storedOptions, filterListIds])
 
     return (<>
         <Stack direction={'row'} justifyContent={'end'} spacing={theme.spacing(2)}
@@ -47,7 +47,7 @@ export const AlexDataTableHeader: FC<IProps> = ({
             <Stack direction={'row'} spacing={theme.spacing(2)} alignItems={'center'} sx={{ marginRight: 'auto' }}>
                 {simpleFilter &&
                     <AlexDataTableSimpleFilter setServerSideOptions={setServerSideOptions}
-                                               serverSideOptions={serverSideOptions}/>}
+                                               storedOptions={storedOptions}/>}
                 {amountOfChosenFilters
                     ? <Chip label={<Typography variant={'body1'}>
                         Применённые фильтры: {amountOfChosenFilters}</Typography>}/>
@@ -55,7 +55,7 @@ export const AlexDataTableHeader: FC<IProps> = ({
             </Stack>
             {filterListIds &&
                 <AlexFilters filterListIds={filterListIds} setServerSideOptions={setServerSideOptions}
-                             serverSideOptions={serverSideOptions} filtersMap={filtersMap}/>}
+                             storedOptions={storedOptions} filtersMap={filtersMap}/>}
             {downloadCSV && <AlexDataTableDownloadCSV columnsState={columnsState} data={data} columns={columns}/>}
             {columnsSelect &&
                 <AlexDataTableColumnsSelect columnsState={columnsState} setColumnsState={setColumnsState}/>}

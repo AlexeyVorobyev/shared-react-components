@@ -5,7 +5,7 @@ import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material
 interface IProps {
     children: ReactNode
     setAnchorEl: React.Dispatch<React.SetStateAction<HTMLButtonElement | null>>
-    serverSideOptions: Map<string, any>
+    storedOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
     filterListIds: string[]
 }
@@ -16,7 +16,7 @@ const DEBUG_PREFIX = 'ALEX_FILTERS'
 export const AlexFiltersFormContext: FC<IProps> = ({
                                                        children,
                                                        setAnchorEl,
-                                                       serverSideOptions,
+                                                       storedOptions,
                                                        setServerSideOptions,
                                                        filterListIds
                                                    }) => {
@@ -26,7 +26,7 @@ export const AlexFiltersFormContext: FC<IProps> = ({
 
     //синхронизация фильтров в форме с текущими serverSideOptions
     useEffect(() => {
-        const data = Object.fromEntries(Array.from(serverSideOptions)
+        const data = Object.fromEntries(Array.from(storedOptions)
             .filter((param) => filterListIds.includes(param[0])))
         DEBUG && console.log(DEBUG_PREFIX, 'data onMount', data)
         reset(data)

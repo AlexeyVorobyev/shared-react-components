@@ -23,13 +23,13 @@ export type TServerSideOptions = Map<string, any>
 
 interface IProps {
 	data?: TAlexBigCalendarData[]
-	serverSideOptions?: TServerSideOptions,
+	storedOptions?: TServerSideOptions,
 	setServerSideOptions?: React.Dispatch<React.SetStateAction<TServerSideOptions>>
 }
 
 export const AlexBigCalendar: FC<IProps> = ({
 												data,
-												serverSideOptions,
+												storedOptions,
 												setServerSideOptions
 											}) => {
 	const theme = useTheme()
@@ -57,10 +57,10 @@ export const AlexBigCalendar: FC<IProps> = ({
 					<Stack direction={'row'} padding={theme.spacing(2)} alignItems={'center'}
 						   spacing={theme.spacing(2)}>
 						<Typography variant={'h6'} color={'white'}>
-							Месяц: {serverSideOptions?.get('date') && MAP_NUMBER_TO_MONTH_RUS.get(new Date(serverSideOptions?.get('date')).getMonth())}
+							Месяц: {storedOptions?.get('date') && MAP_NUMBER_TO_MONTH_RUS.get(new Date(storedOptions?.get('date')).getMonth())}
 						</Typography>
 						<Typography variant={'h6'} color={'white'}>
-							Год: {serverSideOptions?.get('date') && new Date(serverSideOptions?.get('date')).getFullYear()}
+							Год: {storedOptions?.get('date') && new Date(storedOptions?.get('date')).getFullYear()}
 						</Typography>
 					</Stack>
 					<Stack direction={'row'} padding={theme.spacing(2)} alignItems={'center'}
@@ -68,7 +68,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 						<Stack justifyContent={'center'} alignItems={'center'} bgcolor={'white'} borderRadius={'100px'}>
 							<IconButton color={'primary'} size={'small'} onClick={() => {
 								setServerSideOptions?.((prev: TServerSideOptions) => {
-									const actualDate = new Date(serverSideOptions?.get('date'))
+									const actualDate = new Date(storedOptions?.get('date'))
 									prev.set('date', new Date(actualDate.getFullYear(), actualDate.getMonth() - 1, actualDate.getDate()))
 									return new Map(prev)
 								})
@@ -79,7 +79,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 						<Stack justifyContent={'center'} alignItems={'center'} bgcolor={'white'} borderRadius={'100px'}>
 							<IconButton color={'primary'} size={'small'} onClick={() => {
 								setServerSideOptions?.((prev: TServerSideOptions) => {
-									const actualDate = new Date(serverSideOptions?.get('date'))
+									const actualDate = new Date(storedOptions?.get('date'))
 									prev.set('date', new Date(actualDate.getFullYear(), actualDate.getMonth() + 1, actualDate.getDate()))
 									return new Map(prev)
 								})
@@ -92,7 +92,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 				<Grid rowGap={'4px'} columnSpacing={'4px'} container flex={1}
 					  sx={{background: theme.palette.secondary.main}}>
 					<AlexBigCalendarHeaders/>
-					<AlexBigCalendarFiller serverSideOptions={serverSideOptions} setServerSideOptions={setServerSideOptions} data={data}/>
+					<AlexBigCalendarFiller storedOptions={storedOptions} setServerSideOptions={setServerSideOptions} data={data}/>
 				</Grid>
 			</Stack>
 		</Box>)}

@@ -6,7 +6,7 @@ import { AlexFilter, IAlexFilter } from './AlexFilter'
 
 interface IProps {
     filterListIds: (string | [string, string])[]
-    serverSideOptions: Map<string, any>
+    storedOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
     filtersMap: Map<string, IAlexFilter>
 }
@@ -16,7 +16,7 @@ const DEBUG_PREFIX = 'ALEX_FILTERS'
 
 export const AlexFilters: FC<IProps> = ({
                                             filterListIds,
-                                            serverSideOptions,
+                                            storedOptions,
                                             setServerSideOptions,
                                             filtersMap,
                                         }) => {
@@ -44,7 +44,7 @@ export const AlexFilters: FC<IProps> = ({
             }}
         >
             <AlexFiltersFormContext setAnchorEl={setAnchorEl} setServerSideOptions={setServerSideOptions}
-                                    serverSideOptions={serverSideOptions} filterListIds={renamedIds}>
+                                    storedOptions={storedOptions} filterListIds={renamedIds}>
                 {initialIds.map((id, index) => {
                     const config = filtersMap.get(id)
                     if (config) {

@@ -143,7 +143,7 @@ export const AlexDataTable: FC<IAlexDataTableProps> = ({
                 <AlexDataTableHeader simpleFilter={simpleFilter} columnsSelect={columnsSelect}
                                      columnsState={columnsState} setColumnsState={setColumnsState}
                                      filterListIds={filterListIds} setServerSideOptions={setServerSideOptions}
-                                     serverSideOptions={serverSideOptions} downloadCSV={downloadCSV} data={data}
+                                     storedOptions={serverSideOptions} downloadCSV={downloadCSV} data={data}
                                      columns={columns} filtersMap={filtersMap}/>
             )}
             {!rows && (
@@ -239,7 +239,7 @@ export const AlexDataTable: FC<IAlexDataTableProps> = ({
                     <AlexDataTableFooter availablePages={availablePages} perPageOptions={perPageOptions}
                                          availableElements={availableElements}
                                          setServerSideOptions={setServerSideOptions}
-                                         serverSideOptions={serverSideOptions}/>
+                                         storedOptions={serverSideOptions}/>
                 </Box>
             )}
         </Stack>

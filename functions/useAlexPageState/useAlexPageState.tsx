@@ -11,10 +11,12 @@ export enum EUsePageStateMode {
 
 export type TStoredOptions = Map<string, any>
 
+export type TSetStoredOptions = React.Dispatch<React.SetStateAction<TStoredOptions>>
+
 type TUseAlexPageStateReturn = {
     variables: Record<string, any>
     storedOptions: TStoredOptions
-    setStoredOptions: React.Dispatch<React.SetStateAction<TStoredOptions>>
+    setStoredOptions: TSetStoredOptions
 }
 
 interface IUseAlexPageStateProps {

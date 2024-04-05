@@ -75,17 +75,17 @@ function* generate(firstDay: number, lastDay: number) {
 
 interface IProps {
 	data?: TAlexBigCalendarData[]
-	serverSideOptions?: TServerSideOptions,
+	storedOptions?: TServerSideOptions,
 	setServerSideOptions?: React.Dispatch<React.SetStateAction<TServerSideOptions>>
 }
 
 export const AlexBigCalendarFiller: FC<IProps> = ({
 													  data,
-													  serverSideOptions,
+													  storedOptions,
 													  setServerSideOptions
 												  }) => {
 
-	const LOCAL_DATE = useMemo(() => new Date(serverSideOptions?.get('date')), [serverSideOptions])
+	const LOCAL_DATE = useMemo(() => new Date(storedOptions?.get('date')), [storedOptions])
 	const firstDayDate = new Date(LOCAL_DATE.getFullYear(), LOCAL_DATE.getMonth(), 1)
 	const lastDayDate = new Date(LOCAL_DATE.getFullYear(), LOCAL_DATE.getMonth() + 1, 0)
 	const currentMonthDaysArray: number[] = [...generate(firstDayDate.getDate(), lastDayDate.getDate())]
@@ -124,14 +124,14 @@ export const AlexBigCalendarFiller: FC<IProps> = ({
 
 	return (<>
 		{lastMonthDaysArray.map((day) => {
-			return <Cell day={day} deprecated data={data} serverSideOptions={serverSideOptions}
+			return <Cell day={day} deprecated data={data} serverSideOptions={storedOptions}
 						 date={new Date(LOCAL_DATE.getFullYear(), LOCAL_DATE.getMonth() - 1, LOCAL_DATE.getDate())}/>
 		})}
 		{currentMonthDaysArray.map((day) => {
-			return <Cell day={day} data={data} serverSideOptions={serverSideOptions} date={LOCAL_DATE}/>
+			return <Cell day={day} data={data} serverSideOptions={storedOptions} date={LOCAL_DATE}/>
 		})}
 		{nextMonthDaysArray.map((day) => {
-			return <Cell day={day} deprecated data={data} serverSideOptions={serverSideOptions}
+			return <Cell day={day} deprecated data={data} serverSideOptions={storedOptions}
 						 date={new Date(LOCAL_DATE.getFullYear(), LOCAL_DATE.getMonth() + 1, LOCAL_DATE.getDate())}/>
 		})}
 	</>)

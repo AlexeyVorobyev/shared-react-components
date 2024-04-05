@@ -6,7 +6,7 @@ interface IProps {
     availablePages?: number
     perPageOptions: string[]
     availableElements?: number
-    serverSideOptions: Map<string, any>
+    storedOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
 }
 
@@ -14,12 +14,12 @@ export const AlexDataTableFooter: FC<IProps> = ({
                                                     availablePages,
                                                     perPageOptions,
                                                     availableElements,
-                                                    serverSideOptions,
+                                                    storedOptions,
                                                     setServerSideOptions
                                                 }) => {
     const theme = useTheme()
-    const [page, setPage] = useState<string | null>(serverSideOptions.get('page') || '0');
-    const [perPage, setPerPage] = useState<string | null>(serverSideOptions.get('perPage') || '8')
+    const [page, setPage] = useState<string | null>(storedOptions.get('page') || '0');
+    const [perPage, setPerPage] = useState<string | null>(storedOptions.get('perPage') || '8')
     const savedAvailablePages = useRef<string | null>(booleanNumber(availablePages) ? availablePages!.toString() : null)
     const savedAvailableElements = useRef<string | null>(booleanNumber(availableElements) ? availableElements!.toString() : null)
 

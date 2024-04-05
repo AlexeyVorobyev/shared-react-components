@@ -4,12 +4,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import {debounce} from "../functions/debounce";
 
 interface IProps {
-    serverSideOptions: Map<string, any>
+    storedOptions: Map<string, any>
     setServerSideOptions: React.Dispatch<React.SetStateAction<Map<string, any>>>
 }
 
 export const AlexDataTableSimpleFilter: FC<IProps> = ({
-                                                          serverSideOptions,
+                                                          storedOptions,
                                                           setServerSideOptions
                                                       }) => {
     const [simpleFilterState, setSimpleFilterState] = useState<string | null>(null)
@@ -17,7 +17,7 @@ export const AlexDataTableSimpleFilter: FC<IProps> = ({
     const debouncedSetMiddleWareFilterState = useCallback(debounce(setMiddleWareFilterState, 800), [])
 
     useLayoutEffect(() => {
-        const simpleFilterSearchParam = serverSideOptions.get('simpleFilter')
+        const simpleFilterSearchParam = storedOptions.get('simpleFilter')
         simpleFilterSearchParam && setMiddleWareFilterState(simpleFilterSearchParam)
         simpleFilterSearchParam && setSimpleFilterState(simpleFilterSearchParam)
     }, [])
