@@ -1,19 +1,21 @@
-import {CSSProperties, FC, useState} from "react";
-import { Paper, Skeleton, Tooltip, Typography, useTheme } from '@mui/material'
-import {AlexDialog} from "../../AlexDialog/AlexDialog";
+import {CSSProperties, FC, useState} from 'react'
+import {Paper, Skeleton, Tooltip, Typography, useTheme} from '@mui/material'
+import {AlexDialog} from '../../AlexDialog/AlexDialog'
 
 interface IProps {
     src: string,
     beforeLoadedSize?: CSSProperties,
     freeAfterLoaded?: boolean,
     modal?: boolean
+    paperStyles?: CSSProperties
 }
 
 export const AlexImageView: FC<IProps> = ({
                                               src,
                                               beforeLoadedSize,
                                               freeAfterLoaded = false,
-                                              modal = false
+                                              modal = false,
+                                              paperStyles,
                                           }) => {
     const theme = useTheme()
     const [loaded, setLoaded] = useState<boolean>(false)
@@ -30,7 +32,8 @@ export const AlexImageView: FC<IProps> = ({
                        justifyContent: 'center',
                        alignItems: 'center',
                        cursor: modal ? 'pointer' : undefined,
-                       ...((!loaded || !freeAfterLoaded) && beforeLoadedSize)
+                       ...((!loaded || !freeAfterLoaded) && beforeLoadedSize),
+                       ...paperStyles
                    }}>
                 {!loaded && !error && <Skeleton variant="rounded" sx={{width: 'inherit', height: '100%'}}/>}
                 {error && <Typography variant={'h6'} color={theme.palette.error.main}>Произошла ошибка :(</Typography>}
@@ -40,9 +43,9 @@ export const AlexImageView: FC<IProps> = ({
                      style={{
                          objectFit: 'cover',
                          width: '100%',
-                         height:'100%',
+                         height: '100%',
                          maxWidth: loaded && !error ? '100vw' : 0,
-                         maxHeight: loaded && !error ? '100vh' : 0
+                         maxHeight: loaded && !error ? '100vh' : 0,
                      }}/>
             </Paper>
         </Tooltip>
