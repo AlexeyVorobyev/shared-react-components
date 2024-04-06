@@ -4,8 +4,9 @@ import {SvgIconProps, SvgIconTypeMap} from '@mui/material'
 import {OverridableComponent} from '@mui/material/OverridableComponent'
 
 interface IAlexIconProps extends Omit<SvgIconProps, 'color'> {
-    icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> | EIconToNameMap | `${EIconToNameMap}`,
-    color: string
+    icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> | EIconToNameMap | `${EIconToNameMap}` | ReactElement,
+    color?: string
+    width?: string
 }
 
 /**
@@ -18,13 +19,19 @@ interface IAlexIconProps extends Omit<SvgIconProps, 'color'> {
 export const AlexIcon: FC<IAlexIconProps> = ({
                                                  icon,
                                                  color,
+                                                 width,
                                                  ...props
                                              }) => {
     if (typeof icon == 'string') {
         // @ts-ignore
         const Icon = IconToNameMap[icon]
         return (
-            <Icon style={{color: color, fill: color}} {...props}/>
+            <Icon style={{
+                ...props.style,
+                width: width,
+                color: color,
+                fill: color,
+            }} {...props}/>
         )
     } else {
         return (
@@ -33,9 +40,10 @@ export const AlexIcon: FC<IAlexIconProps> = ({
                 ...props,
                 style: {
                     ...props.style,
+                    width: width,
                     color: color,
-                    fill: color
-                }
+                    fill: color,
+                },
             })
         )
     }

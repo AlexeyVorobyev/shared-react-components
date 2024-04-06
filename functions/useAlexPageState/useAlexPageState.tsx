@@ -1,7 +1,7 @@
-import { useSearchParams } from 'react-router-dom'
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { replacer } from './json-functions/replacer.ts'
-import { reviver } from './json-functions/reviver.ts'
+import {useLocation, useSearchParams} from 'react-router-dom'
+import {Dispatch, SetStateAction, useCallback, useEffect, useLayoutEffect, useState} from 'react'
+import {reviver} from './json-functions/reviver.ts'
+import {replacer} from './json-functions/replacer.ts'
 
 export enum EUsePageStateMode {
     queryString = 'QUERY_STRING',
@@ -10,17 +10,10 @@ export enum EUsePageStateMode {
 }
 
 export type TStoredOptions = Map<string, any>
+export type TSetStoredOptions = Dispatch<SetStateAction<TStoredOptions>>
 
-export type TSetStoredOptions = React.Dispatch<React.SetStateAction<TStoredOptions>>
-
-type TUseAlexPageStateReturn = {
-    variables: Record<string, any>
-    storedOptions: TStoredOptions
-    setStoredOptions: TSetStoredOptions
-}
-
-interface IUseAlexPageStateProps {
-    varsBehaviorMap?: (params: Record<string, any>) => Record<string, any>
+interface IProps {
+    varsBehaviorMap?: (params: any) => Record<string, any> | null
     modeRead?: EUsePageStateMode[],
     modeWrite?: EUsePageStateMode[],
     storageKey?: string
@@ -29,27 +22,17 @@ interface IUseAlexPageStateProps {
 
 const DEBUG = true
 
-/**
- *  React hook, which provides functionality of saving data to various storages (localStorage, sessionStorage, query)
- *
- *  @param varsBehaviorMap - Function, mapper converts returned variables
- *  @param modeRead - Array of storages to read in priority
- *  @param modeWrite - Array of storages to write in priority
- *  @param storageKey - key to recognise stored value in sessionStorage and localStorage
- *  @param defaultValue - default values
- *
- *  @return variables - Processed storedOptions in object
- *  @return storedOptions
- *  @return setStoredOptions
- * */
-export const useAlexPageState = ({
-                                     varsBehaviorMap,
-                                     modeRead = [],
-                                     modeWrite = [],
-                                     storageKey = 'pageState',
-                                     defaultValue = new Map<string, any>([]),
-                                 }: IUseAlexPageStateProps): TUseAlexPageStateReturn => {
+export const useAlexPageState = <
+    Variables extends Record<string, any> | null
+>({
+      varsBehaviorMap,
+      modeRead = [],
+      modeWrite = [],
+      storageKey = 'pageState',
+      defaultValue = new Map([]) as TStoredOptions
+  }: IProps) => {
     const [searchParams, setSearchParams] = useSearchParams()
+    const location = useLocation()
 
     const initialSetStoredOptions = useCallback((modeList: EUsePageStateMode[]) => {
         let mode: EUsePageStateMode | undefined = undefined
@@ -74,7 +57,7 @@ export const useAlexPageState = ({
         if (mode === EUsePageStateMode.queryString) {
             const queryStringState = new Map(
                 Array.from(searchParams.entries())
-                    .map((param) => [param[0], JSON.parse(param[1], reviver)]),
+                    .map((param) => [param[0], JSON.parse(param[1], reviver)])
             )
             return new Map([...defaultValue, ...queryStringState]) as TStoredOptions
         } else if (mode === EUsePageStateMode.sessionStorage || mode === EUsePageStateMode.localStorage) {
@@ -92,10 +75,11 @@ export const useAlexPageState = ({
     // синхронизация состояний storage -> storedOptions при моунте
     const [storedOptions, setStoredOptions] = useState<TStoredOptions>(initialSetStoredOptions(modeRead)!)
 
-    const [processedParams, setProcessedParams] = useState<Record<string, any>>(
+    const [processedParams, setProcessedParams] = useState<Variables>(
         varsBehaviorMap
-            ? varsBehaviorMap(Object.fromEntries(storedOptions)) || null
-            : Object.fromEntries(storedOptions) || null)
+            ? varsBehaviorMap(Object.fromEntries(storedOptions)) as Variables
+            : Object.fromEntries(storedOptions) as Variables
+    )
 
     // синхронизация состояний storedOptions -> storage
     useLayoutEffect(() => {
@@ -112,19 +96,19 @@ export const useAlexPageState = ({
         if (modeWrite?.includes(EUsePageStateMode.localStorage)) {
             localStorage.setItem(storageKey, JSON.stringify(storedOptions, replacer))
         }
-    }, [storedOptions])
+    }, [storedOptions, location.search])
 
     useEffect(() => {
         if (varsBehaviorMap) {
-            setProcessedParams(varsBehaviorMap(Object.fromEntries(storedOptions)))
+            setProcessedParams(varsBehaviorMap(Object.fromEntries(storedOptions)) as Variables)
         } else {
-            setProcessedParams(Object.fromEntries(storedOptions))
+            setProcessedParams(Object.fromEntries(storedOptions) as Variables)
         }
     }, [storedOptions])
 
     return {
         variables: processedParams,
         storedOptions: storedOptions,
-        setStoredOptions: setStoredOptions,
+        setStoredOptions: setStoredOptions
     }
 }

@@ -9,6 +9,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import LinkIcon from '@mui/icons-material/Link';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export enum EIconToNameMap {
     schedule = 'schedule',
@@ -19,7 +20,8 @@ export enum EIconToNameMap {
     manageAccounts = 'manageAccounts',
     barChart = 'barChart',
     link = 'link',
-    assignment = 'assignment'
+    assignment = 'assignment',
+    location = 'location'
 }
 
 type TIconToNameMap = {
@@ -27,6 +29,7 @@ type TIconToNameMap = {
 }
 
 export const IconToNameMap: TIconToNameMap = {
+    location: LocationOnIcon,
     schedule: ScheduleIcon,
     calendar: CalendarMonthIcon,
     tag: TagIcon,

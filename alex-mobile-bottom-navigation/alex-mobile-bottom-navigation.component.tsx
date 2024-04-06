@@ -43,8 +43,9 @@ export const AlexMobileBottomNavigation: FC<IAlexMobileBottomNavigationProps> = 
 
     return (
         <BottomNavigation sx={{width: '100%'}} value={value} onChange={handleChange}>
-            {config.map((item) => (
+            {config.map((item, index) => (
                 <BottomNavigationAction
+                    key={index}
                     label={item.name}
                     value={item.path}
                     icon={
