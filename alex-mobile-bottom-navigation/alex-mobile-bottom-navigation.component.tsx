@@ -29,6 +29,10 @@ export const AlexMobileBottomNavigation: FC<IAlexMobileBottomNavigationProps> = 
     const navigate = useNavigate()
     const [value, setValue] = useState<string>(location.pathname)
 
+    useEffect(() => {
+        setValue(location.pathname)
+    }, [location])
+
     const theme = useTheme()
 
     const handleChange = (event: SyntheticEvent, newValue: string) => {

@@ -81,6 +81,7 @@ export const AlexInput: FC<IAlexInputProps> = ({
                             </IconButton>
                         </InputAdornment>
                     ),
+                    ...props.InputProps
                 }}
             />
         </FormControl>

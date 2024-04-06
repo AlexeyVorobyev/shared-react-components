@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react'
 import { Stack, Typography, useTheme } from '@mui/material'
 
 export interface IAlexFilter {
-    label: string,
+    label?: string,
     component: ReactElement
 }
 
@@ -20,7 +20,9 @@ export const AlexFilter: FC<IProps> = ({
 
     return (
         <Stack direction={'column'} spacing={theme.spacing(1)}>
-            <Typography variant={'h6'}>{label}</Typography>
+            {label && (
+                <Typography variant={'h6'}>{label}</Typography>
+            )}
             {React.cloneElement(component, {
                 'name': id,
             })}
