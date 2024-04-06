@@ -54,22 +54,27 @@ export const useAlexPageState = <
             }
         }
 
-        if (mode === EUsePageStateMode.queryString) {
-            const queryStringState = new Map(
-                Array.from(searchParams.entries())
-                    .map((param) => [param[0], JSON.parse(param[1], reviver)])
-            )
-            return new Map([...defaultValue, ...queryStringState]) as TStoredOptions
-        } else if (mode === EUsePageStateMode.sessionStorage || mode === EUsePageStateMode.localStorage) {
-            const stringValue = mode === EUsePageStateMode.sessionStorage
-                ? sessionStorage.getItem(storageKey)
-                : localStorage.getItem(storageKey)
-            return stringValue
-                ? new Map([...defaultValue, ...JSON.parse(stringValue, reviver)]) as TStoredOptions
-                : defaultValue
-        } else {
+        try {
+            if (mode === EUsePageStateMode.queryString) {
+                const queryStringState = new Map(
+                    Array.from(searchParams.entries())
+                        .map((param) => [param[0], JSON.parse(param[1], reviver)])
+                )
+                return new Map([...defaultValue, ...queryStringState]) as TStoredOptions
+            } else if (mode === EUsePageStateMode.sessionStorage || mode === EUsePageStateMode.localStorage) {
+                const stringValue = mode === EUsePageStateMode.sessionStorage
+                    ? sessionStorage.getItem(storageKey)
+                    : localStorage.getItem(storageKey)
+                return stringValue
+                    ? new Map([...defaultValue, ...JSON.parse(stringValue, reviver)]) as TStoredOptions
+                    : defaultValue
+            } else {
+                return defaultValue
+            }
+        } catch (e) {
             return defaultValue
         }
+
     }, [modeRead, defaultValue, localStorage, sessionStorage, storageKey])
 
     // синхронизация состояний storage -> storedOptions при моунте
