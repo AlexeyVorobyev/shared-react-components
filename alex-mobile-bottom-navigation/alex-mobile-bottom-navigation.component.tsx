@@ -19,11 +19,13 @@ type TStyles = {
 interface IAlexMobileBottomNavigationProps {
     config: TBottomNavigationConfig[]
     styles?: TStyles
+    disabledOnRoutes?: string[]
 }
 
 export const AlexMobileBottomNavigation: FC<IAlexMobileBottomNavigationProps> = ({
                                                                                      config,
                                                                                      styles,
+                                                                                     disabledOnRoutes= [],
                                                                                  }) => {
     const location = useLocation()
     const navigate = useNavigate()
@@ -46,7 +48,10 @@ export const AlexMobileBottomNavigation: FC<IAlexMobileBottomNavigationProps> = 
     }, [value])
 
     return (
-        <BottomNavigation sx={{width: '100%'}} value={value} onChange={handleChange}>
+        <BottomNavigation sx={{
+            width: '100%',
+            display: disabledOnRoutes.includes(location.pathname) ? 'none' : undefined
+        }} value={value} onChange={handleChange}>
             {config.map((item, index) => (
                 <BottomNavigationAction
                     key={index}
