@@ -12,8 +12,9 @@ export type TBottomNavigationConfig = {
 }
 
 type TStyles = {
-    inactiveIconColor: string,
-    activeIconColor: string
+    inactiveIconColor?: string,
+    activeIconColor?: string,
+    fill?: boolean
 }
 
 interface IAlexMobileBottomNavigationProps {
@@ -59,6 +60,7 @@ export const AlexMobileBottomNavigation: FC<IAlexMobileBottomNavigationProps> = 
                     value={item.path}
                     icon={
                         <AlexIcon
+                            fill={styles?.fill}
                             icon={item.icon}
                             color={value === item.path
                                 ? (styles?.activeIconColor || theme.palette.secondary.main)
