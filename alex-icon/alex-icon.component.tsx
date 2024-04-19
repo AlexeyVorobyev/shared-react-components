@@ -3,11 +3,12 @@ import {EIconToNameMap, IconToNameMap} from './alex-icon-icon-to-name-map.data.t
 import {SvgIconProps, SvgIconTypeMap} from '@mui/material'
 import {OverridableComponent} from '@mui/material/OverridableComponent'
 
-interface IAlexIconProps extends Omit<SvgIconProps, 'color' | 'fill'> {
+interface IAlexIconProps extends Omit<SvgIconProps, 'color' | 'fill' | 'stroke'> {
     icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> | EIconToNameMap | `${EIconToNameMap}` | ReactElement,
     color?: string
     width?: string
     fill?: boolean
+    stroke?: boolean
 }
 
 /**
@@ -21,7 +22,8 @@ export const AlexIcon: FC<IAlexIconProps> = ({
                                                  icon,
                                                  color,
                                                  width,
-                                                 fill = false,
+                                                 fill = true,
+                                                 stroke = true,
                                                  ...props
                                              }) => {
     if (typeof icon == 'string') {
@@ -44,6 +46,7 @@ export const AlexIcon: FC<IAlexIconProps> = ({
                     ...props.style,
                     width: width,
                     color: color,
+                    stroke: stroke ? color : undefined,
                     fill: fill ? color : undefined,
                 },
             })
