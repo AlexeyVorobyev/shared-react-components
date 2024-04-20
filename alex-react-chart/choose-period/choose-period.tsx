@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react'
-import {Box, Container, IconButton, Popover, Portal} from '@mui/material'
+import {Box, Button, Container, IconButton, Paper, Popover, Portal, Stack, useTheme} from '@mui/material'
 import {
     addDays,
     addMonths,
@@ -42,7 +42,7 @@ const ChoosePeriod: FC<IProps> = ({
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
     const open = Boolean(anchorEl)
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (event: React.MouseEvent<any>) => {
         setAnchorEl(event.currentTarget)
     }
 
@@ -108,8 +108,12 @@ const ChoosePeriod: FC<IProps> = ({
     }
 
     const handleChange = (value: TAlexDatePeriodPickerValue) => {
-        handleStartDateTime(new Date(value.startDate))
-        handleEndDateTime(new Date(value.startDate))
+        if (value.startDate !== startDateTime.toString()) {
+            handleStartDateTime(new Date(value.startDate))
+        }
+        if (value.finishDate !== endDateTime.toString()) {
+            handleEndDateTime(new Date(value.finishDate))
+        }
     }
 
     useEffect(() => {
@@ -126,32 +130,49 @@ const ChoosePeriod: FC<IProps> = ({
         }
     }, [startDateTime, endDateTime])
 
+    const theme = useTheme()
+
     return (
         <Box>
-            <IconButton
+            <Button
                 onClick={handleClick}
                 style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     maxWidth: '290px',
-                    padding: 0,
+                    padding: theme.spacing(1),
+                    borderRadius: 0,
                 }}
             >
+                <Box
+                    onClick={handleClick}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        top: 0,
+                        left: 0,
+                        zIndex: 1000,
+                        position: 'absolute',
+                    }}
+                />
                 <AlexDatePeriodPicker
                     configFirstInput={{
                         type: EDatePickerType.dateTime,
                         disabled: true,
+                        format: 'dd/MM/yy'
                     }}
                     configSecondInput={{
                         type: EDatePickerType.dateTime,
                         disabled: true,
+                        format: 'dd/MM/yy'
                     }}
                     value={{
                         startDate: startDateTime.toString(),
-                        finishDate: endDateTime.toString()
+                        finishDate: endDateTime.toString(),
                     }}
-                    onChange={() => {}}/>
-            </IconButton>
+                    onChange={() => {
+                    }}/>
+            </Button>
             {open ? (
                 <Portal>
                     <Popover open={open}
@@ -161,16 +182,16 @@ const ChoosePeriod: FC<IProps> = ({
                                  horizontal: 'left',
                              }}
                              onClose={handleClose}>
-                        <Container
+                        <Paper
                             data-testid="graph-container-date-settings"
                             style={{
                                 display: 'flex',
                                 justifyContent: 'center',
-                                marginBottom: 15,
                                 maxWidth: '380px',
+                                padding: theme.spacing(2),
                                 backgroundColor: 'white',
                             }}>
-                            <Container style={{padding: '0 5px'}}>
+                            <Stack direction={'column'} gap={theme.spacing(2)}>
                                 <SelectRadio option={periods}
                                              value={checkPeriod}
                                              setValue={setCurPeriod as (value: string) => void}/>
@@ -183,11 +204,11 @@ const ChoosePeriod: FC<IProps> = ({
                                     }}
                                     value={{
                                         startDate: startDateTime.toString(),
-                                        finishDate: endDateTime.toString()
+                                        finishDate: endDateTime.toString(),
                                     }}
                                     onChange={handleChange}/>
-                            </Container>
-                        </Container>
+                            </Stack>
+                        </Paper>
                     </Popover>
                 </Portal>
             ) : null}

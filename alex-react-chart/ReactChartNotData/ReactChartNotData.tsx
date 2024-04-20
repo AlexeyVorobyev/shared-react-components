@@ -9,6 +9,7 @@ const ReactChartNotData: React.FC = () => (
             height: '100%',
             borderRadius: 5,
             padding: 10,
+            boxSizing: 'border-box'
         }}
     >
         <Box style={{
@@ -17,7 +18,8 @@ const ReactChartNotData: React.FC = () => (
             height: '100%',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            boxSizing: 'border-box'
         }}>
             <Typography variant={'h4'} color={'#a29e9e'} justifyContent={'center'}>
                 Нет данных

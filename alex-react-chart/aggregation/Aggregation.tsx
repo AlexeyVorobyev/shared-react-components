@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {TTimeAgg} from '../types/time-agg.type.ts'
 import {aggregateForPeriod} from './aggregate-for-period.function.ts'
 import {ETimeAggregation} from '../enums/ETimeAggregation.ts'
+import {SelectRadio} from '../select-radio/select-radio.tsx'
 
 export enum ETimeAggregationOptionsAggregation {
     NO_AGG = 'Без агрегации',
@@ -36,9 +37,9 @@ const timeAggregationResolver = {
 }
 
 const Aggregation: React.FC<IProps> = ({
-    timeAgg,
-    setTimeAgg
-}) => {
+                                           timeAgg,
+                                           setTimeAgg,
+                                       }) => {
 
     const listAggregation: ETimeAggregationOptionsAggregation[] = aggregateForPeriod(timeAgg.startDash, timeAgg.endDash)
     const haveAgg = listAggregation.find((item) => item === timeAggregationResolver[timeAgg.aggregation])
@@ -53,12 +54,12 @@ const Aggregation: React.FC<IProps> = ({
     }, [haveAgg])
 
     useEffect(() => {
-        setTimeAgg({ ...timeAgg, aggregation: timeAggregationResolver[aggregation] as ETimeAggregation })
+        setTimeAgg({...timeAgg, aggregation: timeAggregationResolver[aggregation] as ETimeAggregation})
     }, [aggregation])
 
     return (
-        // @ts-ignore
-        <SelectRadio option={listAggregation} value={aggregation} setValue={setAggregation} height={40}/>
+        <SelectRadio option={listAggregation} value={aggregation} setValue={setAggregation as (value: string) => void}
+                     height={40}/>
     )
 }
 

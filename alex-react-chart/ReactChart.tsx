@@ -52,7 +52,6 @@ interface IReactChartProps {
     linkCard?: string
     loading?: boolean
     useDialogReactChart?: boolean
-    useDialogReactChartTable?: boolean
     useButtonForTitle?: boolean
     useButtonForLegend?: boolean
     useButtonForThresholds?: boolean
@@ -71,7 +70,6 @@ export const ReactChart: FC<IReactChartProps> = ({
     linkCard,
     loading = false,
     useDialogReactChart = false,
-    useDialogReactChartTable = false,
     useButtonForLegend = false,
     useButtonForThresholds = false,
     useButtonForTitle = false,
@@ -131,12 +129,7 @@ export const ReactChart: FC<IReactChartProps> = ({
     const handleClickOpenDialogReactChart = () => {
         setOpenDialogReactChart(true)
     }
-    const handleCloseTable = () => {
-        setOpenDialogMetricSmallTable(false)
-    }
-    const handleClickOpenTable = () => {
-        setOpenDialogMetricSmallTable(true)
-    }
+
     const handleClickSetGraphType = (graphType: EGraphType) => {
         setLocalGraphType(graphType)
     }
