@@ -1,4 +1,4 @@
-import React, {cloneElement, createElement, FC, ReactElement} from 'react'
+import React, {cloneElement, FC, ReactElement} from 'react'
 import {EIconToNameMap, IconToNameMap} from './alex-icon-icon-to-name-map.data.ts'
 import {SvgIconProps, SvgIconTypeMap} from '@mui/material'
 import {OverridableComponent} from '@mui/material/OverridableComponent'

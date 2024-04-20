@@ -11,7 +11,7 @@ export interface IAlexDatePeriodPickerProps {
     configFirstInput: TAlexDatePickerPropsOmit
     configSecondInput: TAlexDatePickerPropsOmit
     value: TAlexDatePeriodPickerValue
-    onChange: (...events: any) => void
+    onChange: (value: TAlexDatePeriodPickerValue) => void
 }
 
 
