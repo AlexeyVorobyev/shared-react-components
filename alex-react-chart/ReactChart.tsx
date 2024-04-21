@@ -105,7 +105,6 @@ export const ReactChart: FC<IReactChartProps> = ({
     })
 
     const [openDialogReactChart, setOpenDialogReactChart] = useState<boolean>(false)
-    const [openDialogMetricSmallTable, setOpenDialogMetricSmallTable] = useState<boolean>(false)
     const [localGraphType, setLocalGraphType] = useState<EGraphType | null>(null)
 
     const handleClickButtonForTitle = (value: boolean) => {

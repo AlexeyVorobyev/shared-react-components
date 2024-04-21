@@ -62,7 +62,6 @@ const ButtonsCustom: FC<ButtonsCustomProps> = ({
             {(
                 useButtonForGraphType
                 && handleClickSetGraphType
-                && graphType !== EGraphType.RESULTS
                 && graphType
             ) && (
                 <CustomMenuButton

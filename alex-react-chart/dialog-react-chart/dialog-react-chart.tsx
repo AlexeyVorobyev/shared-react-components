@@ -169,7 +169,7 @@ const DialogReactChart: React.FC<IDialogReactChartProps> = ({
                         <Stack direction={'row'} paddingLeft={theme.spacing(2)}
                                paddingRight={theme.spacing(2)} useFlexGap alignItems={'center'}>
                             <Stack direction={'row'} spacing={'20px'} alignItems={'center'}>
-                                <Typography variant={'h3'}>Выберите период</Typography>
+                                <Typography variant={'h5'}>Выберите период</Typography>
                                 <Box width={'300px'}>
                                     <ChoosePeriod timeAgg={timeAgg}
                                                   setTimeAgg={setTimeAgg}/>
@@ -177,7 +177,7 @@ const DialogReactChart: React.FC<IDialogReactChartProps> = ({
                             </Stack>
 
                             <Stack direction={'row'} spacing={'20px'} alignItems={'center'}>
-                                <Typography variant={'h3'}>Агрегация</Typography>
+                                <Typography variant={'h5'}>Агрегация</Typography>
                                 <Box width={'200px'}>
                                     <Aggregation timeAgg={timeAgg}
                                                  setTimeAgg={setTimeAgg}/>

@@ -11,12 +11,12 @@ import {Stack, Typography} from '@mui/material'
 import {EFormatType} from '../enums/format-type.enum.ts'
 
 export type TReactChartPartialInterface = {
-    id: string
-    title: string
-    valueFormat: EFormatType
-    graphType: EGraphType
+    id?: string
+    title?: string
+    valueFormat?: EFormatType
+    graphType?: EGraphType
     datasets: TDataset[]
-    thresholds: TThreshold[]
+    thresholds?: TThreshold[]
 }
 
 export interface IReactChartProps {
@@ -80,7 +80,7 @@ const ReactChartEngine: React.FC<IReactChartProps> = ({
     }, [datasets])
 
     return curHeight ? (
-        <div key={id} style={{height: '100%', width: '100%', padding: padding}}>
+        <div key={id} style={{height: '100%', width: '100%', padding: padding, boxSizing: 'border-box'}}>
             {[EGraphType.LINE, EGraphType.AREA].includes(graphType) && (
                 <ReactChartLine title={title} showTitle={showTitle} showLegend={showLegend} height={curHeight}
                                 heightTable={heightTable} options={processOptionsCallback()}

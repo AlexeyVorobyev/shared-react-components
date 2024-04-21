@@ -73,7 +73,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 									return new Map(prev)
 								})
 							}}>
-								<AlexIcon iconName={'keyBoardArrowLeft'} fontSize={'large'}/>
+								<AlexIcon icon={'keyBoardArrowLeft'} fontSize={'large'}/>
 							</IconButton>
 						</Stack>
 						<Stack justifyContent={'center'} alignItems={'center'} bgcolor={'white'} borderRadius={'100px'}>
@@ -84,7 +84,7 @@ export const AlexBigCalendar: FC<IProps> = ({
 									return new Map(prev)
 								})
 							}}>
-								<AlexIcon iconName={'keyBoardArrowRight'} fontSize={'large'}/>
+								<AlexIcon icon={'keyBoardArrowRight'} fontSize={'large'}/>
 							</IconButton>
 						</Stack>
 					</Stack>

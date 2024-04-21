@@ -43,7 +43,7 @@ export const AlexFilters: FC<IProps> = ({
                 horizontal: 'left',
             }}
         >
-            <AlexFiltersFormContext setAnchorEl={setAnchorEl} setServerSideOptions={setServerSideOptions}
+            <AlexFiltersFormContext setAnchorEl={setAnchorEl} setStoredOptions={setServerSideOptions}
                                     storedOptions={storedOptions} filterListIds={renamedIds}>
                 {initialIds.map((id, index) => {
                     const config = filtersMap.get(id)
