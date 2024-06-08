@@ -30,7 +30,7 @@ export type TCustomDataTableRow = Map<string, ReactNode>
 export type TActionConfig = {
     columnName: string // номер столбца для использования в роли id
     path: string // путь к странице
-    params: URLSearchParams
+    params?: URLSearchParams
 }
 
 export enum EActionDeleteType {
